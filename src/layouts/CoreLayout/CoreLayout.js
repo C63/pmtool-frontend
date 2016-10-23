@@ -1,14 +1,16 @@
 import React from 'react'
-import Header from '../../components/Header'
+import TopMenu from '../../components/TopMenu/TopMenu'
+import SideMenu from '../../components/SideMenu/SideMenu'
 import './CoreLayout.scss'
 import '../../styles/core.scss'
 
 export const CoreLayout = ({ children }) => (
-  <div className='container text-center'>
-    <Header />
-    <div className='core-layout__viewport'>
+  <div className='outer-container'>
+    <SideMenu />
+    <main id='page-wrap'>
+      <TopMenu />
       {children}
-    </div>
+    </main>
   </div>
 )
 

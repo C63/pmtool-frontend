@@ -1,14 +1,17 @@
 import React from 'react'
-import DuckImage from '../assets/Duck.jpg'
-import './HomeView.scss'
-
+import CardList from '../../../components/CardList/CardList'
+import lists from './MOCK_DATA.json'
 export const HomeView = () => (
-  <div>
-    <h4>Welcome!</h4>
-    <img
-      alt='This is a duck, because Redux!'
-      className='duck'
-      src={DuckImage} />
+  <div className='page-home'>
+    <div className='container-fluid'>
+      <div className='list-container'>
+        { lists.map((list) => {
+          return (
+            <CardList key={list.id} list={list} />
+          )
+        })}
+      </div>
+    </div>
   </div>
 )
 

@@ -1,0 +1,30 @@
+.card-list{
+  margin: 40px 0 0 20px;
+  padding: 10px;
+  &__header{
+    margin: 20px 0;
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    &__name{
+      color: $card-text;
+      flex-grow: 0.3;
+      font-size: $large-font-size;
+      font-weight: 500;
+    }
+    &__counter{
+      flex-grow: 0.3;
+      text-align: center;
+      color: white;
+      background-color: $topmenu-text;
+      border-radius: 10px;
+      font-size: $small-font-size;
+    }
+    &__dots{
+      font-size: $normal-font-size;
+      flex-grow: 3;
+      text-align: right;
+      color: $topmenu-text;
+    }
+  }
+}

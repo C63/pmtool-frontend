@@ -1,6 +1,15 @@
 @import 'base';
 @import '~normalize.css/normalize';
-
+@import "settings";
+@import "./component/TopMenu/TopMenu";
+@import "./component/SideMenu/SideMenu";
+@import "./component/CardList/CardList";
+@import "./component/Tag/Tag";
+@import "./component/User/User";
+@import "./component/CardList/Card/Card";
+@import "./component/CardList/NewCard/NewCard";
+@import "./routes/Home/Home";
+@import "Font";
 // Some best-practice CSS that's useful for most apps
 // Just remove them if they're not what you want
 html {
@@ -18,4 +27,8 @@ body {
 *:before,
 *:after {
   box-sizing: inherit;
+}
+
+* {
+  font-family: 'Roboto', sans-serif;
 }

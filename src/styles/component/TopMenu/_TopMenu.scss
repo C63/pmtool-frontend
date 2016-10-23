@@ -1,0 +1,48 @@
+.top-menu{
+  display: inline-flex;
+  height: 56px;
+  background-color: $topmenu-bg;
+  width: 100%;
+  &__search{
+    padding: 24px 0 18px 46px;
+    width: 70%;
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: row;
+    .input-group {
+      input{
+        padding: 0;
+        border: none;
+        background-color: transparent;
+        box-shadow: none;
+        font-size: $small-font-size;
+        line-height: $small-font-size;
+        max-height: $small-font-size;
+        font-weight: 400;
+        color: $topmenu-text;
+      }
+      width: 100%;
+
+    }
+    .form-group{
+      margin-bottom: 0;
+    }
+  }
+  &__dropdown {
+    width: 30%;
+    display: inline-flex;
+    justify-content: flex-end;
+    align-items: center;
+    flex-direction: row;
+    margin-right: 56px;
+    i{
+      font-size: $large-font-size;
+      color: $topmenu-text;
+      margin: 0 20px;
+    }
+    .user{
+      width: 26px;
+      height: 26px;
+    }
+  }
+}

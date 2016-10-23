@@ -1,0 +1,13 @@
+.new-card {
+  border: 2px dashed #ddd;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  i{
+    color: $card-text;
+    margin-right: 10px;
+  }
+  span{
+    color: $card-text;
+  }
+}

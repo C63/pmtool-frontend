@@ -1,0 +1,10 @@
+.user{
+  background-color: $user-bg;
+  color: $topmenu-text;
+  font-weight: 700;
+  font-size: $very-small-font-size;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 3px;
+}
