@@ -6,6 +6,7 @@
     display: flex;
     width: 100%;
     justify-content: space-between;
+    align-items: baseline;
     &__name{
       color: $card-text;
       flex-grow: 0.3;
@@ -19,6 +20,7 @@
       background-color: $topmenu-text;
       border-radius: 10px;
       font-size: $small-font-size;
+      font-weight: 500;
     }
     &__dots{
       font-size: $normal-font-size;

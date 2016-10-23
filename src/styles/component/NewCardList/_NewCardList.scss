@@ -1,0 +1,16 @@
+.new-card-list{
+  margin: 115px 0 0 20px;
+  padding: 30px;
+  min-width: 280px;
+  height: 100%;
+  border: 2px dashed #ddd;
+  display: flex;
+  align-items: center;
+  i{
+    color: $card-text;
+    margin-right: 10px;
+  }
+  span{
+    color: $card-text;
+  }
+}
