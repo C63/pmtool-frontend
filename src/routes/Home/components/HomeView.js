@@ -24,11 +24,11 @@ export default class HomeView extends React.Component
           <div className='list-container'>
             { lists.map((list) => {
               return (
-                <CardList key={list.id} list={list} toggleModal={this.toggleModal} />
+                <CardList key={list.id} list={list} toggleModal={this.toggleModal.bind(this)} />
               )
             })}
             <NewCardList />
-            <CardModal showModal={openModal} toggleModal={this.toggleModal} />
+            <CardModal showModal={openModal} toggleModal={this.toggleModal.bind(this)} />
           </div>
         </div>
       </div>

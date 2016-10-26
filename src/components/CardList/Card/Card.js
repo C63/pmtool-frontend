@@ -5,9 +5,9 @@ import moment from 'moment'
 export default class Card extends React.Component
 {
   render () {
-    const { card } = this.props
+    const { card, onClick } = this.props
     return (
-      <div className='card'>
+      <div className='card' onClick={onClick}>
         <div className='card__user'>
           { card.users.map((user, index) => {
             return (
@@ -41,5 +41,6 @@ export default class Card extends React.Component
 }
 
 Card.propTypes = {
-  card : React.PropTypes.object
+  card : React.PropTypes.object,
+  onClick: React.PropTypes.func
 }

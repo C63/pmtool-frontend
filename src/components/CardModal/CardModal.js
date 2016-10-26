@@ -19,7 +19,7 @@ export default class CardModal extends React.Component
           <h4>Overflowing text to show scroll behavior</h4>
         </Modal.Body>
         <Modal.Footer>
-          <Button onClick={close}>Close</Button>
+          <Button onClick={toggleModal}>Close</Button>
         </Modal.Footer>
       </Modal>
     )
