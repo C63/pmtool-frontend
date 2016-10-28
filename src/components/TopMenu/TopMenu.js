@@ -1,5 +1,5 @@
 import React from 'react'
-import User from '../User/User'
+import UserItem from '../User/UserItem/UserItem'
 import { FormGroup, InputGroup, FormControl } from 'react-bootstrap'
 export default class TopMenu extends React.Component
 {
@@ -18,7 +18,7 @@ export default class TopMenu extends React.Component
         </div>
         <div className='top-menu__dropdown'>
           <i className='material-icons'>notifications</i>
-          <User user={user} />
+          <UserItem user={user} />
         </div>
       </div>
     )

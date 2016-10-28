@@ -5,7 +5,7 @@ export default class CardList extends React.Component
 {
 
   render () {
-    const { list, toggleModal } = this.props
+    const { list } = this.props
     return (
       <div className='card-list'>
         <div className='card-list__header'>
@@ -15,7 +15,7 @@ export default class CardList extends React.Component
         </div>
         { list.cards.map((card) => {
           return (
-            <Card key={card.id} card={card} onClick={toggleModal} />
+            <Card key={card.id} card={card} />
           )
         })}
         <NewCard />

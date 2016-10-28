@@ -1,25 +1,34 @@
 import React from 'react'
-import Tag from '../../Tag/Tag'
-import User from '../../User/User'
-import moment from 'moment'
+import UserList from '../../User/UserList/UserList'
+import TagList from '../../TagList/TagList'
+import CardModal from '../../Modal/CardModal/CardModal'
+import DateBox from '../../DateBox/DateBox'
+
 export default class Card extends React.Component
 {
+  constructor () {
+    super()
+    this.state = {
+      isOpen: false
+    }
+    this.toggleModal = this.toggleModal.bind(this)
+  }
+  toggleModal () {
+    const { isOpen } = this.state
+    this.setState({
+      isOpen: !isOpen
+    })
+  }
   render () {
-    const { card, onClick } = this.props
+    const { card } = this.props
+    const { isOpen } = this.state
     return (
-      <div className='card' onClick={onClick}>
-        <div className='card__user'>
-          { card.users.map((user, index) => {
-            return (
-              <User key={index} user={user} />
-            )
-          })}
+      <div className='card' onClick={this.toggleModal}>
+        <div className=''>
+          <UserList users={card.users} className='card__users' />
         </div>
         <div className='card__header'>
-          <div className='card__header__date'>
-            <i className='material-icons'>date_range</i>
-            <time>{ moment(card.date_created).format('DD MMM') }</time>
-          </div>
+          <DateBox className='card__header__date' date={card.date_created} />
           <div className='card__header__message'>
             <i className='material-icons'>question_answer</i>
             <span>{ card.messages.length }</span>
@@ -28,13 +37,8 @@ export default class Card extends React.Component
         <div className='card__content'>
           <p>{card.card_content}</p>
         </div>
-        <div className='card__tags'>
-          { card.tags.map((tag, index) => {
-            return (
-              <Tag tag={tag} key={index} />
-            )
-          })}
-        </div>
+        <TagList tags={card.tags} className='card__tags' />
+        { isOpen && <CardModal isOpen={isOpen} closeModal={this.toggleModal} card={card} /> }
       </div>
     )
   }
