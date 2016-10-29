@@ -1,0 +1,141 @@
+.card-modal{
+  padding: 0 20px;
+  .modal-header{
+    border: none;
+    button{
+      position: absolute;
+      top: -20px;
+      right: -25px;
+      font-size: 1.5*$largest-font-size;
+      opacity: 1;
+      font-weight: 100;
+      color: white;
+      span{
+        color: white;
+        text-shadow: none;
+      }
+    }
+  }
+  &__status{
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    &__date, &__message, &__star{
+      margin-right: 10px;
+    }
+    &__date{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    i, time{
+      color: $card-text;
+      font-size: 11px;
+      font-weight: 500;
+      margin-right: 5px;
+    }
+    &__message{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      span{
+        color: $card-text;
+        font-size: 11px;
+        font-weight: 500;
+      }
+    }
+  }
+  &__header{
+    margin-bottom: 20px;
+    display: inline-flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    p{
+      margin: 0;
+      font-weight: 400;
+      line-height: $card-modal-line-height;
+    }
+    &__title{
+      width: 30ch;
+      font-size: $large-font-size;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      color: $card-modal-title;
+    }
+    &__status{
+      text-align: center;
+      color: white;
+      background-color: $topmenu-text;
+      border-radius: 20px;
+      font-size: $card-modal-status-font-size;
+      font-weight: 500;
+      padding: 0 15px;
+      text-transform: uppercase;
+    }
+  }
+  &__userlist{
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: row;
+    .user{
+      width: 26px;
+      height: 26px;
+      &:not(:last-child){
+        margin-right: 5px;
+      }
+    }
+  }
+  &__task-description{
+    h3{
+      margin: 0;
+      margin-bottom: 20px;
+      color: $card-modal-title;
+      text-transform: uppercase;
+      font-size: $normal-font-size;
+      font-weight: 700;
+    }
+    p{
+      margin-bottom: 20px;
+      font-size: $small-font-size;
+      color: $card-modal-title;
+      font-weight: 400;
+      line-height: $card-modal-task-line-height;
+    }
+    border-bottom: 1px solid rgba(97, 97, 97, 0.18);
+  }
+  &__activity{
+   h3{
+     margin: 20px 0 15px 0;
+     color: $card-modal-title;
+     text-transform: uppercase;
+     font-size: $normal-font-size;
+     font-weight: 700;
+   }
+   &__comment-box{
+     input{
+       font-size: $small-font-size;
+       color: $card-modal-title;
+       font-weight: 400;
+       line-height: $card-modal-task-line-height;
+       width: 100%;
+       min-height: 5vw;
+       border:  1px solid rgba(97, 97, 97, 0.18);
+       border-radius: 3px;
+       padding: 20px;
+       &:focus{
+         background-color: lighten($card-modal-title, 50%);
+       }
+     }
+     .user{
+       margin: 10px 0;
+       width: 26px;
+       height: 26px;
+       &:not(:last-child){
+         margin-right: 5px;
+       }
+     }
+   }
+  }
+}

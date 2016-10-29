@@ -1,8 +1,11 @@
 import React from 'react'
 import { Modal, Button } from 'react-bootstrap'
 import CoreModal from '../CoreModal'
-import moment from 'moment'
 import UserList from '../../User/UserList/UserList'
+import DateBox from '../../Common/DateBox/DateBox'
+import MessageBox from '../../Common/MessageBox/MessageBox'
+import CommentBox from '../../Common/CommentBox/CommentBox'
+
 export default class CardModal extends React.Component
 {
   renderCardModal () {
@@ -12,14 +15,8 @@ export default class CardModal extends React.Component
         <Modal.Header closeButton />
         <Modal.Body>
           <div className='card-modal__status'>
-            <div className='card-modal__status__date'>
-              <i className='material-icons'>date_range</i>
-              <time>{ moment(card.date_created).format('DD MMM') }</time>
-            </div>
-            <div className='card-modal__status__message'>
-              <i className='material-icons'>question_answer</i>
-              <span>{ card.messages.length }</span>
-            </div>
+            <DateBox className='card-modal__status__date' date={card.date_created} />
+            <MessageBox className='card-modal__status__message' messages={card.messages} />
             <div className='card-modal__status__star'>
               <i className='material-icons'>star_border</i>
               <i className='material-icons'>star_border</i>
@@ -27,15 +24,27 @@ export default class CardModal extends React.Component
               <i className='material-icons'>star_border</i>
               <i className='material-icons'>star_border</i>
             </div>
-            <div className='card-modal__header'>
-              <span className='card-modal__header__title'>
-                {card.card_content}
-              </span>
-              <span className='card-modal__header__status'>
-                Started
-              </span>
-            </div>
-            <UserList className='card-modal__userlist' users={card.users} />
+          </div>
+          <div className='card-modal__header'>
+            <p className='card-modal__header__title'>
+              {card.card_content}
+            </p>
+            <p className='card-modal__header__status'>
+              Started
+            </p>
+          </div>
+          <UserList className='card-modal__userlist' users={card.users} />
+          <div className='card-modal__task-description'>
+            <h3>Task Description</h3>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+              Excepturi consectetur ab voluptatum officiis architecto,
+              officia dignissimos qui ipsa molestiae eligendi iusto facilis mollitia incidunt
+              , eaque vero nemo eveniet autem nobis.
+            </p>
+          </div>
+          <div className='card-modal__activity'>
+            <h3>Activity</h3>
+            <CommentBox user={card.users[0]} className={'card-modal__activity__comment-box'} />
           </div>
         </Modal.Body>
         <Modal.Footer>

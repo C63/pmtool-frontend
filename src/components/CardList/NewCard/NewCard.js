@@ -6,7 +6,6 @@ export default class NewCard extends React.Component
     return (
       <div className='new-card'>
         <i className='material-icons'>add_circle</i>
-        <span>Add new task</span>
       </div>
     )
   }

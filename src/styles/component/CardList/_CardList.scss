@@ -22,11 +22,14 @@
       font-size: $small-font-size;
       font-weight: 500;
     }
-    &__dots{
+    &__right{
       font-size: $normal-font-size;
       flex-grow: 3;
       text-align: right;
       color: $topmenu-text;
+      .plus, .dots{
+        padding: 0 5px;
+      }
     }
   }
 }
