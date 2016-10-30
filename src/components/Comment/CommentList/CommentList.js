@@ -3,9 +3,9 @@ import CommentItem from '../CommentItem/CommentItem'
 
 export const CommentList = ({ comments, className }) => (
   <div className={className}>
-    {comments.map((comment) => {
-      <CommentItem comment={comment} />
-    })}
+    { comments.slice(0, 5).map((comment) => {
+      return <CommentItem comment={comment} key={comment.id} className='comment' />
+    }) }
   </div>
 )
 

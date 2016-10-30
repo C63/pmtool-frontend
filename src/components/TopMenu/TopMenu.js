@@ -18,7 +18,7 @@ export default class TopMenu extends React.Component
         </div>
         <div className='top-menu__dropdown'>
           <i className='material-icons'>notifications</i>
-          <UserItem user={user} />
+          <UserItem user={user} boxOnlyMode />
         </div>
       </div>
     )

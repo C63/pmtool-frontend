@@ -8,7 +8,7 @@ export default class UserList extends React.Component
       <div className={className}>
         { users.map((user, index) => {
           return (
-            <UserItem key={index} user={user} />
+            <UserItem key={index} user={user} boxOnlyMode />
           )
         })}
       </div>

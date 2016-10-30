@@ -1,11 +1,11 @@
 import React from 'react'
-import UserItem from '../../User/UserItem'
+import UserItem from '../../User/UserItem/UserItem'
 import moment from 'moment'
 export const CommentItem = ({ comment, className }) => (
   <div className={className}>
-    <UserItem user={comment.user} />
-    <time>{ moment(comment.date).format('HH.MM MMM DD YYYY') }</time>
-    <p>{comment.comment_content}</p>
+    <UserItem user={comment.user} displayDirection='vertical' />
+    <time>{ moment(comment.create_date).format('HH.MM MMM DD YYYY') }</time>
+    <p className={className + '__content'}>{comment.content}</p>
   </div>
 )
 

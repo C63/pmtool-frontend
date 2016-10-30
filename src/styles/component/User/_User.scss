@@ -8,3 +8,15 @@
   align-items: center;
   border-radius: 3px;
 }
+.user__box-only{
+  .user-detail{
+    display: none;
+  }
+}
+.user__horizontal {
+
+}
+.user__vertical {
+  display: inline-flex;
+  flex-direction: row;
+}

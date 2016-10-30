@@ -1,15 +1,17 @@
 import React from 'react'
-import { Modal, Button } from 'react-bootstrap'
+import { Modal } from 'react-bootstrap'
 import CoreModal from '../CoreModal'
 import UserList from '../../User/UserList/UserList'
 import DateBox from '../../Common/DateBox/DateBox'
 import MessageBox from '../../Common/MessageBox/MessageBox'
 import CommentBox from '../../Common/CommentBox/CommentBox'
+import CommentList from '../../Comment/CommentList/CommentList'
+import comments from './mock_comments.json'
 
 export default class CardModal extends React.Component
 {
   renderCardModal () {
-    const { card, closeModal } = this.props
+    const { card } = this.props
     return (
       <div className='card-modal'>
         <Modal.Header closeButton />
@@ -46,10 +48,8 @@ export default class CardModal extends React.Component
             <h3>Activity</h3>
             <CommentBox user={card.users[0]} className={'card-modal__activity__comment-box'} />
           </div>
+          <CommentList comments={comments} className='card-modal__comments' />
         </Modal.Body>
-        <Modal.Footer>
-          <Button onClick={closeModal}>Close</Button>
-        </Modal.Footer>
       </div>
     )
   }

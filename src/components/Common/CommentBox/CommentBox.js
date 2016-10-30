@@ -1,5 +1,5 @@
 import React from 'react'
-// import Button from 'react-bootstrap'
+import { Button } from 'react-bootstrap'
 import UserItem from '../../User/UserItem/UserItem'
 
 export const CommentBox = ({ user, className }) => (
@@ -7,7 +7,13 @@ export const CommentBox = ({ user, className }) => (
     <input type='text' placeholder='Lorem ipsum dolor sit amet,
       consectetur adipisicing elit. Fuga nostrum obcaecati doloribus labore maiores rerum adipisci'
     />
-    <UserItem user={user} />
+    <div className={className + '__bottom'}>
+      <UserItem user={user} boxOnlyMode />
+      <div className={className + '__bottom__buttons'}>
+        <Button>Add</Button>
+        <Button>Cancel</Button>
+      </div>
+    </div>
   </div>
 )
 
