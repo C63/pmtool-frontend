@@ -5,7 +5,7 @@ import './CoreLayout.scss'
 import '../../styles/core.scss'
 
 export const CoreLayout = ({ children }) => (
-  <div className='outer-container'>
+  <div id='outer-container'>
     <SideMenu />
     <main id='page-wrap'>
       <TopMenu />
