@@ -17,6 +17,25 @@
       }
     }
   }
+  .modal-footer{
+    text-align: center;
+    border: none;
+    margin: $base-margin 0;
+    button{
+      border: none;
+      box-shadow: none;
+      font-size: 1.3*$card-modal-status-font-size;
+      color: $card-modal-comment-button;
+      background-color: $card-modal-comment-button-bg;
+      font-weight: 700;
+      padding: 0.5*$base-margin $base-margin;
+      width: 30%;
+      &:hover{
+        background-color: lighten($card-modal-comment-button-bg, 2);
+      }
+      text-transform: uppercase;
+    }
+  }
   h3{
     font-size: $normal-font-size;
     font-weight: 600;
@@ -51,10 +70,8 @@
     padding: 5px;
     display: inline-flex;
     flex-direction: row;
-    .user{
-      width: $user-box-size;
-      height: $user-box-size;
-      &:not(:last-child){
+    .user__box-only{
+      &:not(:last-of-type){
         margin-right: 5px;
       }
     }

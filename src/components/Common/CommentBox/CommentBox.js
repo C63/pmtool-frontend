@@ -8,7 +8,7 @@ export const CommentBox = ({ user, className }) => (
       consectetur adipisicing elit. Fuga nostrum obcaecati doloribus labore maiores rerum adipisci'
     />
     <div className={className + '__bottom'}>
-      <UserItem user={user} boxOnlyMode />
+      <UserItem user={user} displayDirection='horizontal' />
       <div className={className + '__bottom__buttons'}>
         <Button>Add</Button>
         <Button>Cancel</Button>

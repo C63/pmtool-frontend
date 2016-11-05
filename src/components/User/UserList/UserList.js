@@ -1,5 +1,7 @@
 import React from 'react'
 import UserItem from '../UserItem/UserItem'
+import AddMemberPopover from '../../Popover/AddMemberPopover/AddMemberPopover'
+
 export default class UserList extends React.Component
 {
   render () {
@@ -11,6 +13,7 @@ export default class UserList extends React.Component
             <UserItem key={index} user={user} boxOnlyMode />
           )
         })}
+        <AddMemberPopover users={users} />
       </div>
     )
   }

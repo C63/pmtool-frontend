@@ -5,7 +5,7 @@ export default class CoreModal extends React.Component
   render () {
     const { isOpen, closeModal, children } = this.props
     return (
-      <Modal show={isOpen} onHide={closeModal}>
+      <Modal show={isOpen} onHide={closeModal} enforceFocus={false} >
         {children}
       </Modal>
     )

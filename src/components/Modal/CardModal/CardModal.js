@@ -28,12 +28,12 @@ export default class CardModal extends React.Component
             </div>
           </div>
           <div className='card-modal__header'>
-            <p className='card-modal__header__title'>
+            <span className='card-modal__header__title'>
               {card.card_content}
-            </p>
-            <p className='card-modal__header__status'>
-              Started
-            </p>
+              <p className='card-modal__header__status'>
+                Started
+              </p>
+            </span>
           </div>
           <UserList className='card-modal__userlist' users={card.users} />
           <div className='card-modal__task-description'>
