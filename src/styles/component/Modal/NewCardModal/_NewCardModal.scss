@@ -71,9 +71,7 @@
     display: inline-flex;
     flex-direction: row;
     .user__box-only{
-      &:not(:last-of-type){
-        margin-right: 5px;
-      }
+      margin-right: 5px;
     }
   }
 }
