@@ -1,8 +1,11 @@
 .list-container{
   display: flex;
   justify-content: space-between;
-  overflow: scroll;
+  overflow-x: scroll;
 }
 .page-home{
   background-color: $mainpage-bg;
+  .container-fluid{
+    padding-right: 0;
+  }
 }
