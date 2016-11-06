@@ -14,7 +14,14 @@ export function login (data) {
     }
   }
 }
-
+export function doLogin () {
+  return (dispatch) => {
+    fetch('http://localhost:3000/api/v1/test')
+      .then(response => { dispatch(login(response)) })
+      .then(data => { dispatch(login(data)) })
+      .catch(error => { dispatch(login(error)) })
+  }
+}
 export const actions = {
   login
 }

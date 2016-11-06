@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { login } from '../modules/login'
+import { doLogin } from '../modules/login'
 
 /*  This is a container component. Notice it does not contain any JSX,
     nor does it import React. This component is **only** responsible for
@@ -13,7 +13,7 @@ import Login from '../components/Login'
     implementing our wrapper around increment; the component doesn't care   */
 
 const mapDispatchToProps = {
-  login
+  doLogin
 }
 
 const mapStateToProps = (state) => ({
