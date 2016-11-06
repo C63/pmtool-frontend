@@ -25,7 +25,7 @@ export default class User extends React.Component
         </div>
         <div className='user-detail'>
           <p>{user.full_name}</p>
-          <p>@{user.nickname}</p>
+          <p>@{user.full_name.split(' ')[0]}</p>
         </div>
       </div>
     )

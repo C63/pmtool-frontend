@@ -7,6 +7,15 @@
   justify-content: center;
   align-items: center;
   border-radius: 3px;
+  width: $user-box-size;
+  height: $user-box-size;
+  &-detail{
+    p{
+      &:last-child {
+        text-transform: lowercase;
+      }
+    }
+  }
 }
 .user__box-only{
   .user-detail{
@@ -14,9 +23,40 @@
   }
 }
 .user__horizontal {
-
+  display: flex;
+  align-items: center;
+  .user-detail{
+    p{
+      margin-left: 0.25*$base-margin;
+      display: inline-flex;
+      margin-bottom: 0;
+      &:first-child{
+        font-size: 0.9*$small-font-size;
+        font-weight: 700;
+      }
+      &:last-child{
+        font-size: $card-modal-status-font-size;
+        color: $card-modal-comment-time;
+      }
+    }
+  }
 }
 .user__vertical {
   display: inline-flex;
   flex-direction: row;
+  .user-detail{
+    margin-left: 10px;
+    margin-bottom: 0.5*$base-margin;
+    p{
+      margin: 0;
+      &:first-child{
+        font-size: $small-font-size;
+        font-weight: 700;
+      }
+      &:last-child{
+        font-size: $card-modal-status-font-size;
+        color: $card-modal-comment-time;
+      }
+    }
+  }
 }

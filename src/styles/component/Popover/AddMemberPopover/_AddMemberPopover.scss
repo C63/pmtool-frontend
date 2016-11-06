@@ -1,0 +1,42 @@
+.add-member-popover{
+  h4{
+    text-align: center;
+    margin: $base-margin 0;
+    color: $card-modal-title;
+    font-size: $large-font-size;
+    font-weight: 400;
+  }
+  input{
+    margin-bottom: $base-margin;
+    width: 100%;
+    font-size: $small-font-size;
+    color: $card-modal-title;
+    font-weight: 400;
+    line-height: $card-modal-task-line-height;
+    width: 100%;
+    min-height: 2vw;
+    border:  1px solid rgba(97, 97, 97, 0.18);
+    border-radius: 3px;
+    padding: 0.25*$base-margin;
+    &:focus{
+      background-color: lighten($card-modal-title, 50%);
+    }
+  }
+  .user__horizontal{
+    margin-bottom: $base-margin;
+  }
+  &__btn{
+    border: none;
+    box-shadow: none;
+    width: $user-box-size;
+    height: $user-box-size;
+    padding: 0;
+    color: $topmenu-text;
+    font-size: $normal-font-size;
+    font-weight: $heavy-font-weight;
+    &:hover, &:focus, &:active{
+      background-color: $card-modal-comment-button-bg;
+      outline: none;
+    }
+  }
+}

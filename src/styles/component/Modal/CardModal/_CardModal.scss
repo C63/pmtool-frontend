@@ -51,17 +51,13 @@
     display: inline-flex;
     justify-content: space-between;
     flex-wrap: wrap;
-    p{
+    span, p{
       margin: 0;
       font-weight: 400;
       line-height: $card-modal-line-height;
     }
     &__title{
-      width: 30ch;
       font-size: $large-font-size;
-      white-space: nowrap;
-      text-overflow: ellipsis;
-      overflow: hidden;
       color: $card-modal-title;
     }
     &__status{
@@ -73,6 +69,8 @@
       font-weight: 500;
       padding: 0 15px;
       text-transform: uppercase;
+      display: inline-block;
+      margin-left: 0.5*$base-margin !important;
     }
   }
   &__userlist{
@@ -80,8 +78,6 @@
     display: flex;
     flex-direction: row;
     .user{
-      width: 26px;
-      height: 26px;
       &:not(:last-child){
         margin-right: 5px;
       }
@@ -133,6 +129,7 @@
        display: flex;
        justify-content: space-between;
        align-items: center;
+       margin: $base-margin 0;
        button{
          border: none;
          box-shadow: none;
@@ -146,13 +143,10 @@
          }
          text-transform: uppercase;
        }
-     }
-     .user{
-       margin: 10px 0;
-       width: $user-box-size;
-       height: $user-box-size;
-       &:not(:last-child){
-         margin-right: 5px;
+       .user{
+         &:not(:last-child){
+           margin-right: 5px;
+         }
        }
      }
    }
@@ -181,21 +175,6 @@
         height: 1.5* $user-box-size;
         span{
           font-size: $small-font-size;
-        }
-      }
-      .user-detail{
-        margin-left: 10px;
-        margin-bottom: 0.5*$base-margin;
-        p{
-          margin: 0;
-          &:first-child{
-            font-size: $small-font-size;
-            font-weight: 700;
-          }
-          &:last-child{
-            font-size: $card-modal-status-font-size;
-            color: $card-modal-title;
-          }
         }
       }
     }

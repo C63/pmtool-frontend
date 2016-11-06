@@ -20,11 +20,12 @@
     display: inline-flex;
     flex-direction: row;
     .user{
-      width: 26px;
-      height: 26px;
       &:not(:last-child){
         margin-right: 5px;
       }
+    }
+    button{
+      display: none;
     }
   }
   &__header{

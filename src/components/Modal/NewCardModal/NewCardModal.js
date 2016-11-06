@@ -1,5 +1,5 @@
 import React from 'react'
-import { Modal } from 'react-bootstrap'
+import { Modal, Button } from 'react-bootstrap'
 import CoreModal from '../CoreModal'
 import UserList from '../../User/UserList/UserList'
 export default class NewCardModal extends React.Component
@@ -18,11 +18,12 @@ export default class NewCardModal extends React.Component
             <h3>Description</h3>
             <input type='text' placeholder='Lirem isum dkm' />
             <h3>People</h3>
-            <div className='new-card-modal__people'>
-              <UserList users={cards[0].users} />
-            </div>
+            <UserList users={cards[0].users} className='new-card-modal__people' />
           </div>
         </Modal.Body>
+        <Modal.Footer>
+          <Button>Add task</Button>
+        </Modal.Footer>
       </div>
     )
   }
