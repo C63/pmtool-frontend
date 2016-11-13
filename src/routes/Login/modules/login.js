@@ -23,7 +23,6 @@ export function loginRequest (data) {
 }
 
 export function loginSuccess (data) {
-  console.log(get(data, 'access-token'))
   return {
     type    : LOGIN_SUCCESS,
     payload : {

@@ -11,9 +11,7 @@ export default class Login extends React.Component
   }
 
   componentWillReceiveProps (nextProps) {
-    console.log(nextProps)
     if (nextProps.userToken) {
-      console.log('run')
       browserHistory.push('/')
     }
   }
