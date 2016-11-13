@@ -12,12 +12,14 @@ import Login from '../components/Login'
     Keys will be passed as props to presentational components. Here we are
     implementing our wrapper around increment; the component doesn't care   */
 
-const mapDispatchToProps = {
-  doLogin
-}
+const mapDispatchToProps = (dispatch) => ({
+  doLogin: (data) => (dispatch(doLogin(data)))
+})
 
 const mapStateToProps = (state) => ({
-  loginStatus : state.loginStatus
+  loginStatus : state.login.loginStatus,
+  errorLoginMessage : state.login.errorLoginMessage,
+  userToken: state.login.userToken
 })
 
 /*  Note: mapStateToProps is where you should use `reselect` to create selectors, ie:
