@@ -2,19 +2,18 @@ import get from 'lodash/get'
 // ------------------------------------
 // Constants
 // ------------------------------------
-export const LOGIN_REQUEST = 'LOGIN_REQUEST'
-export const LOGIN_ERROR = 'LOGIN_ERROR'
-export const LOGIN_SUCCESS = 'LOGIN_SUCCESS'
-export const LOGOUT = 'LOGOUT'
+export const SIGNUP_REQUEST = 'SIGNUP_REQUEST'
+export const SIGNUP_ERROR = 'SIGNUP_ERROR'
+export const SIGNUP_SUCCESS = 'SIGNUP_SUCCESS'
 
 export const ACCOUNT_URL = 'http://localhost:8080/api/v1/accounts/'
 // ------------------------------------
 // Actions
 // ------------------------------------
 
-export function loginRequest (data) {
+export function signUpRequest (data) {
   return {
-    type    : LOGIN_REQUEST,
+    type    : SIGNUP_REQUEST,
     payload : {
       data : data,
       isFetching: true,
@@ -23,9 +22,9 @@ export function loginRequest (data) {
   }
 }
 
-export function loginSuccess (data) {
+export function signUpSuccess (data) {
   return {
-    type    : LOGIN_SUCCESS,
+    type    : SIGNUP_SUCCESS,
     payload : {
       isFetching: false,
       isAuthenticated: true,
@@ -34,9 +33,9 @@ export function loginSuccess (data) {
   }
 }
 
-export function loginError (data) {
+export function signUpError (data) {
   return {
-    type    : LOGIN_ERROR,
+    type    : SIGNUP_ERROR,
     payload : {
       message : data,
       isFetching: false,
@@ -44,15 +43,11 @@ export function loginError (data) {
     }
   }
 }
-export function logOut () {
-  return {
-    type: LOGOUT
-  }
-}
-export function doLogin (data) {
+
+export function doSignUp (data) {
   return (dispatch) => {
-    dispatch(loginRequest(data))
-    fetch(ACCOUNT_URL + 'get-token', {
+    dispatch(signUpRequest(data))
+    fetch(ACCOUNT_URL + 'register', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -64,55 +59,47 @@ export function doLogin (data) {
       if (response.status === 200) {
         response.json().then(data => {
           localStorage.setItem('userToken', get(data, 'access-token'))
-          dispatch(loginSuccess(data))
+          dispatch(signUpSuccess(data))
         })
-        return
       }
-      return Promise.reject(response.statusText)
+      return Promise.reject(response)
     })
     .catch(error => {
       localStorage.clear()
-      dispatch(loginError(error))
-    })
-  }
+      error.json().then(errmes => dispatch(signUpError(errmes.exception)))
+    }) }
 }
 
 // ------------------------------------
 // Reducer
 // ------------------------------------
 const initialState = {
-  loginStatus: null,
+  signUpStatus: null,
   isAuthenticated : !!localStorage.getItem('userToken'),
-  errorLoginMessage: '',
+  errorSignUpMessage: '',
   userToken: null
 }
-export default function loginReducer (state = initialState, action) {
+export default function signUpReducer (state = initialState, action) {
   switch (action.type) {
-    case LOGIN_REQUEST:
+    case SIGNUP_REQUEST:
       return Object.assign({}, state, {
         isFetching: action.payload.isFetching,
         isAuthenticated: action.payload.isAuthenticated
       })
-    case LOGIN_ERROR:
+    case SIGNUP_ERROR:
       return Object.assign({}, state, {
-        loginStatus : false,
+        signUpStatus : false,
         isFetching: action.payload.isFetching,
         isAuthenticated: action.payload.isAuthenticated,
-        errorLoginMessage: action.payload.message,
-        userToken: ''
+        errorSignUpMessage: action.payload.message
       })
-    case LOGIN_SUCCESS:
+    case SIGNUP_SUCCESS:
       return Object.assign({}, state, {
-        loginStatus : true,
+        signUpStatus : true,
         isFetching: action.payload.isFetching,
         isAuthenticated: action.payload.isAuthenticated,
         userToken: action.payload.userToken,
-        errorLoginMessage: ''
-      })
-    case LOGOUT:
-      localStorage.clear()
-      return Object.assign({}, state, {
-        initialState
+        errorSignUpMessage: ''
       })
     default:
       return state

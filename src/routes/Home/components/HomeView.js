@@ -4,14 +4,9 @@ import NewCardList from '../../../components/CardList/NewCardList/NewCardList'
 import lists from './MOCK_DATA.json'
 import TopMenu from '../../../components/TopMenu/TopMenu'
 import SideMenu from '../../../components/SideMenu/SideMenu'
-import { browserHistory } from 'react-router'
 export default class HomeView extends React.Component
 {
-  componentWillMount () {
-    if (!localStorage.getItem('userToken')) {
-      browserHistory.push('/login')
-    }
-  }
+
   render () {
     return (
       <div id='outer-container'>

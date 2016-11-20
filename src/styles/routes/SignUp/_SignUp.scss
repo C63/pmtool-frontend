@@ -1,4 +1,4 @@
-.login{
+.signup{
   width: 100vw;
   height: 100vh;
   display: flex;
@@ -67,7 +67,7 @@
       background-color: $card-modal-comment-button-bg;
       font-weight: 700;
       padding: 0.5*$base-margin $base-margin;
-      width: 30%;
+      width: 40%;
       opacity: 0.5;
       transition: opacity 0.2s ease-in-out;
       &:hover{

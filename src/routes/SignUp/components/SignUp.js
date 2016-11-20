@@ -1,17 +1,17 @@
 import React from 'react'
 import { findDOMNode } from 'react-dom'
 import { FormControl, FormGroup, Button } from 'react-bootstrap'
-import { Link, browserHistory } from 'react-router'
+import { browserHistory } from 'react-router'
 import classNames from 'classnames'
-export default class Login extends React.Component
+export default class SignUp extends React.Component
 {
   constructor () {
     super()
-    this.login = this.login.bind(this)
+    this.signup = this.signup.bind(this)
   }
 
   shouldComponentUpdate (nextProps) {
-    if (nextProps.loginStatus) {
+    if (nextProps.userToken !== this.props.userToken) {
       return false
     }
     return true
@@ -19,34 +19,42 @@ export default class Login extends React.Component
 
   componentWillReceiveProps (nextProps) {
     if (nextProps.userToken) {
-      browserHistory.goBack()
+      browserHistory.push('/')
     }
   }
 
-  login (e) {
-    const { doLogin } = this.props
+  signup (e) {
+    const { doSignUp } = this.props
     e.preventDefault()
-    doLogin({
+    doSignUp({
+      'name' : findDOMNode(this.refs.name).value,
       'email' : findDOMNode(this.refs.email).value,
       'password': findDOMNode(this.refs.password).value
     })
   }
 
   render () {
-    const { loginStatus, errorLoginMessage } = this.props
+    const { signUpStatus, errorSignUpMessage } = this.props
     const statusClassName = classNames(
-      'login__status',
+      'signup__status',
       {
-        'login__status__fail' : loginStatus !== null && loginStatus === false,
-        'login__status__success': loginStatus === true
+        'signup__status__fail' : signUpStatus !== null && signUpStatus === false,
+        'signup__status__success': signUpStatus === true
       })
     return (
-      <div className='login'>
-        <div className='login__modal'>
+      <div className='signup'>
+        <div className='signup__modal'>
           <h4>Welcome, my friend</h4>
-          <form onSubmit={this.login} className='login__form'>
-            <p className={statusClassName}>{errorLoginMessage}</p>
+          <form onSubmit={this.signup} className='signup__form'>
+            <p className={statusClassName}>{errorSignUpMessage}</p>
             <FormGroup>
+              <FormControl
+                id='formControlsName'
+                label='Fullname'
+                type='text'
+                placeholder='Enter your full name'
+                ref='name'
+              />
               <FormControl
                 id='formControlsEmail'
                 type='email'
@@ -63,13 +71,10 @@ export default class Login extends React.Component
               />
               <Button
                 type='submit'
-                className='login__submit-btn'
+                className='signup__submit-btn'
                 >
-                  Login
+                  Register
               </Button>
-              <div className='login__signup-forgot'>
-                <Link to={`/signup`}>Sign-up</Link> / <Link to={`/forgot`}>Forgot your password</Link>
-              </div>
             </FormGroup>
           </form>
         </div>
@@ -78,10 +83,10 @@ export default class Login extends React.Component
   }
 }
 
-Login.propTypes = {
-  doLogin : React.PropTypes.func.isRequired,
-  loginStatus: React.PropTypes.bool,
+SignUp.propTypes = {
+  doSignUp : React.PropTypes.func.isRequired,
+  signUpStatus: React.PropTypes.bool,
   dispatch: React.PropTypes.func,
-  errorLoginMessage: React.PropTypes.string,
+  errorSignUpMessage: React.PropTypes.string,
   userToken: React.PropTypes.string
 }
