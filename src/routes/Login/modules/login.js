@@ -7,7 +7,6 @@ export const LOGIN_ERROR = 'LOGIN_ERROR'
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS'
 export const LOGOUT = 'LOGOUT'
 
-export const ACCOUNT_URL = 'http://localhost:8080/api/v1/accounts/'
 // ------------------------------------
 // Actions
 // ------------------------------------
@@ -47,33 +46,6 @@ export function loginError (data) {
 export function logOut () {
   return {
     type: LOGOUT
-  }
-}
-export function doLogin (data) {
-  return (dispatch) => {
-    dispatch(loginRequest(data))
-    fetch(ACCOUNT_URL + 'get-token', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-      },
-      body: JSON.stringify(data)
-    })
-    .then(response => {
-      if (response.status === 200) {
-        response.json().then(data => {
-          localStorage.setItem('userToken', get(data, 'access-token'))
-          dispatch(loginSuccess(data))
-        })
-        return
-      }
-      return Promise.reject(response.statusText)
-    })
-    .catch(error => {
-      localStorage.clear()
-      dispatch(loginError(error))
-    })
   }
 }
 
