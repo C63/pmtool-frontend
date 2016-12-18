@@ -1,16 +1,37 @@
 .new-card-list{
   margin: 115px 0 0 20px;
-  padding: 30px;
   min-width: 280px;
   height: 100%;
-  border: 2px dashed #ddd;
-  display: flex;
-  align-items: center;
+  cursor: pointer;
   i{
     color: $card-text;
     margin-right: 10px;
   }
   span{
     color: $card-text;
+  }
+  .add-list-btn{
+    padding: 30px;
+    border: 2px dashed #ddd;
+    display: flex;
+    align-items: center;
+  }
+  .add-list-form{
+    input{
+      width: 100%;
+      padding: 8px 16px;
+      color: $card-text;
+      margin-bottom: 10px;
+    }
+
+    &__btn{
+      text-align: right;
+      button{
+        text-transform: uppercase;
+        color: $topmenu-text;
+        font-weight: $heavy-font-weight;
+        margin-left: 0.5*$base-margin;
+      }
+    }
   }
 }

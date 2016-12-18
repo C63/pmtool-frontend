@@ -26,7 +26,7 @@ export default class CardList extends React.Component
     return
   }
   render () {
-    const { list } = this.props
+    const { list, listMode } = this.props
     const NewCardModal = this.renderCardModal()
     return (
       <div className='card-list'>
@@ -41,7 +41,7 @@ export default class CardList extends React.Component
         </div>
         { list.cards.map((card) => {
           return (
-            <Card key={card.id} card={card} />
+            <Card key={card.id} card={card} listMode={listMode} />
           )
         })}
       </div>
@@ -51,5 +51,6 @@ export default class CardList extends React.Component
 
 CardList.propTypes = {
   list: React.PropTypes.object,
-  toggleModal: React.PropTypes.func
+  toggleModal: React.PropTypes.func,
+  listMode: React.PropTypes.string
 }
