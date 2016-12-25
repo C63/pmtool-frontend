@@ -2,6 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { browserHistory } from 'react-router'
 import get from 'lodash/get'
+import './index.scss'
 
 export function requireAuthentication (Component) {
   class AuthenticatedComponent extends React.Component {
@@ -22,7 +23,7 @@ export function requireAuthentication (Component) {
 
     render () {
       return (
-        <div>
+        <div className='auth-container'>
           {!this.props.isFetching && this.props.userToken
               ? <Component {...this.props} />
               : null

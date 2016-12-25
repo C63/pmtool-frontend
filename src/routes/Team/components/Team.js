@@ -6,7 +6,7 @@ import SideMenu from '../../../components/SideMenu/SideMenu'
 class Team extends React.Component {
   render () {
     const { team } = this.props
-    console.log(team)
+
     return (
       <div className='main-container'>
         <SideMenu />

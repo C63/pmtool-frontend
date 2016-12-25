@@ -1,6 +1,8 @@
 import React from 'react'
 import Card from './Card/Card'
 import NewCardModal from '../Modal/NewCardModal/NewCardModal'
+import { Scrollbars } from 'react-custom-scrollbars'
+
 export default class CardList extends React.Component
 {
   constructor () {
@@ -39,11 +41,23 @@ export default class CardList extends React.Component
           </span>
           {NewCardModal}
         </div>
-        { list.cards.map((card) => {
-          return (
-            <Card key={card.id} card={card} listMode={listMode} />
-          )
-        })}
+        { listMode === 'vertical' &&
+          <Scrollbars autoHide >
+            { list.cards.map((card) => {
+              return (
+                <Card key={card.id} card={card} listMode={listMode} />
+              )
+            })}
+          </Scrollbars>
+        }
+
+        { listMode === 'horizontal' &&
+          list.cards.map((card) => {
+            return (
+              <Card key={card.id} card={card} listMode={listMode} />
+            )
+          })
+        }
       </div>
     )
   }
