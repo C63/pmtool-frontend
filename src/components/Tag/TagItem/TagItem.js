@@ -3,11 +3,10 @@ import React from 'react'
 export default class Tag extends React.Component
 {
   render () {
-    const { tag, isLastTag } = this.props
-    const isLast = isLastTag ? '' : ','
+    const { tag } = this.props
     return (
       <div className='tag'>
-        <span>{tag.tag_content}{isLast}</span>
+        <span>{tag.tag_content}</span>
       </div>
     )
   }

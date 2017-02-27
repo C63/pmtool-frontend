@@ -8,7 +8,7 @@ export default class TagList extends React.Component
       <div className={className}>
         { tags.map((tag, index) => {
           return (
-            <TagItem key={index} tag={tag} isLastTag={index === tags.length - 1} />
+            <TagItem key={index} tag={tag} />
           )
         })}
       </div>
