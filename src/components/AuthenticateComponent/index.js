@@ -16,7 +16,7 @@ export function requireAuthentication (Component) {
     }
 
     checkAuth () {
-      if (this.props.isFetching || !this.props.userToken) {
+      if (this.props.isFetching || !this.props.token) {
         browserHistory.push(`/login`)
       }
     }
@@ -24,7 +24,7 @@ export function requireAuthentication (Component) {
     render () {
       return (
         <div className='auth-container'>
-          {!this.props.isFetching && this.props.userToken
+          {!this.props.isFetching && this.props.token
               ? <Component {...this.props} />
               : null
           }
@@ -35,7 +35,6 @@ export function requireAuthentication (Component) {
 
   const mapStateToProps = (state) => {
     return {
-      userToken: get(state, 'login.userToken'),
       isFetching: get(state, 'login.isFetching')
     }
   }
@@ -44,7 +43,11 @@ export function requireAuthentication (Component) {
     isFetching : React.PropTypes.bool,
     location: React.PropTypes.object,
     dispatch: React.PropTypes.func,
-    userToken: React.PropTypes.string
+    token: React.PropTypes.string
+  }
+
+  AuthenticatedComponent.defaultProps = {
+    token : localStorage.getItem('userToken')
   }
 
   return connect(mapStateToProps)(AuthenticatedComponent)
