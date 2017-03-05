@@ -2,8 +2,7 @@ import React from 'react'
 import { Popover, Button } from 'react-bootstrap'
 import CorePopover from '../CorePopover'
 import UserItem from '../../User/UserItem/UserItem'
-export default class AddMemberPopover extends React.Component
-{
+export default class AddMemberPopover extends React.Component {
   renderPopOver () {
     const { users } = this.props
     return (

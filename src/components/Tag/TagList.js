@@ -1,7 +1,6 @@
 import React from 'react'
 import TagItem from './TagItem/TagItem'
-export default class TagList extends React.Component
-{
+export default class TagList extends React.Component {
   render () {
     const { tags, className } = this.props
     return (

@@ -8,8 +8,7 @@ import CommentBox from '../../Common/CommentBox/CommentBox'
 import CommentList from '../../Comment/CommentList/CommentList'
 import comments from './mock_comments.json'
 
-export default class CardModal extends React.Component
-{
+export default class CardModal extends React.Component {
   renderCardModal () {
     const { card } = this.props
     return (

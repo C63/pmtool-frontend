@@ -3,8 +3,7 @@ import { findDOMNode } from 'react-dom'
 import { FormControl, FormGroup, Button } from 'react-bootstrap'
 import { Link, browserHistory } from 'react-router'
 import classNames from 'classnames'
-export default class Login extends React.Component
-{
+export default class Login extends React.Component {
   constructor () {
     super()
     this.login = this.login.bind(this)

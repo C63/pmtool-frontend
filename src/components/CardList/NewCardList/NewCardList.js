@@ -1,8 +1,7 @@
 import React from 'react'
 import onClickOutside from 'react-onclickoutside'
 
-class NewCardList extends React.Component
-{
+class NewCardList extends React.Component {
   constructor () {
     super()
 

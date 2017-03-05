@@ -2,8 +2,7 @@ import React from 'react'
 import { Modal, Button } from 'react-bootstrap'
 import CoreModal from '../CoreModal'
 import UserList from '../../User/UserList/UserList'
-export default class NewCardModal extends React.Component
-{
+export default class NewCardModal extends React.Component {
   renderCardModal () {
     const { cards } = this.props
     return (

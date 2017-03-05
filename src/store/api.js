@@ -1,32 +1,27 @@
 import get from 'lodash/get'
 import { loginRequest, loginError, loginSuccess } from '../routes/Login/modules/login'
 import { signUpSuccess, signUpError, signUpRequest } from '../routes/SignUp/modules/signup'
-import { ACCOUNT_URL } from './constant.js'
+import { addTaskRequest, addTaskSuccess, addTaskError } from '../routes/ProjectDetail/modules'
+import { ACCOUNT_URL } from './constant'
+import { fetchPost } from '../utils/fetch'
 
 export function doLogin (data) {
   return (dispatch) => {
     dispatch(loginRequest(data))
-    fetch(ACCOUNT_URL + 'get-token', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-      },
-      body: JSON.stringify(data)
-    })
-    .then(response => {
-      if (response.status === 200) {
-        response.json().then(data => {
-          localStorage.setItem('userToken', get(data, 'access-token'))
-          dispatch(loginSuccess(data))
-        })
-        return
-      }
-      return Promise.reject(response.statusText)
-    })
+    fetch(ACCOUNT_URL + 'get-token', fetchPost(data))
+    .then(
+      response => {
+        if (response.status === 200) {
+          return response.json().then(data => {
+            localStorage.setItem('userToken', get(data, 'access-token'))
+            return dispatch(loginSuccess(data))
+          })
+        }
+        return Promise.reject(response.statusText)
+      })
     .catch(error => {
       localStorage.clear()
-      dispatch(loginError(error))
+      return dispatch(loginError(error))
     })
   }
 }
@@ -34,26 +29,30 @@ export function doLogin (data) {
 export function doSignUp (data) {
   return (dispatch) => {
     dispatch(signUpRequest(data))
-    fetch(ACCOUNT_URL + 'register', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-      },
-      body: JSON.stringify(data)
-    })
+    fetch(ACCOUNT_URL + 'register', fetchPost(data))
     .then(response => {
       if (response.status === 200) {
-        response.json().then(data => {
+        return response.json().then(data => {
           localStorage.setItem('userToken', get(data, 'access-token'))
-          dispatch(signUpSuccess(data))
+          return dispatch(signUpSuccess(data))
         })
       }
       return Promise.reject(response)
     })
     .catch(error => {
       localStorage.clear()
-      error.json().then(errmes => dispatch(signUpError(errmes.exception)))
+      return error.json().then(errmes => dispatch(signUpError(errmes.exception)))
     })
+  }
+}
+
+export function addTask (params) {
+  return (dispatch) => {
+    dispatch(addTaskRequest(params))
+    fetch(ACCOUNT_URL + 'tasks', fetchPost(params))
+    .then(
+      response => response.json().then(data => dispatch(addTaskSuccess(data))),
+      error => error.json().then(err => dispatch(addTaskError(err)))
+    )
   }
 }

@@ -6,8 +6,7 @@ import TopMenu from '../../../components/TopMenu/TopMenu'
 import SideMenu from '../../../components/SideMenu/SideMenu'
 import classNames from 'classnames'
 
-export default class ProjectDetail extends React.Component
-{
+export default class ProjectDetail extends React.Component {
   constructor () {
     super()
     this.state = {

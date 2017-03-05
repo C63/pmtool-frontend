@@ -1,6 +1,6 @@
 // We only need to import the modules necessary for initial render
 import CoreLayout from '../layouts/CoreLayout/CoreLayout'
-import ProjectDetail from './ProjectDetail'
+import ProjectRoute from './ProjectDetail'
 import LoginRoute from './Login'
 import SignUpRoute from './SignUp'
 import ProjectsRoute from './Projects'
@@ -17,7 +17,7 @@ export const createRoutes = (store) => ({
     LoginRoute(store),
     SignUpRoute(store),
     ProjectsRoute(store),
-    ProjectDetail,
+    ProjectRoute(store),
     TeamRoute(store)
   ]
 })

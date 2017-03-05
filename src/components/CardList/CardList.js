@@ -3,8 +3,7 @@ import Card from './Card/Card'
 import NewCardModal from '../Modal/NewCardModal/NewCardModal'
 import { Scrollbars } from 'react-custom-scrollbars'
 
-export default class CardList extends React.Component
-{
+export default class CardList extends React.Component {
   constructor () {
     super()
     this.state = {

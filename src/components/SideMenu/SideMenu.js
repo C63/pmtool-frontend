@@ -1,8 +1,7 @@
 import React from 'react'
 import UserItem from '../User/UserItem/UserItem'
 import { Link } from 'react-router'
-export default class SideMenu extends React.Component
-{
+export default class SideMenu extends React.Component {
   render () {
     const user = {
       full_name: 'Phuc Doan'

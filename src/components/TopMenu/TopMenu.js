@@ -1,7 +1,6 @@
 import React from 'react'
 import { FormGroup, InputGroup, FormControl } from 'react-bootstrap'
-export default class TopMenu extends React.Component
-{
+export default class TopMenu extends React.Component {
   render () {
     return (
       <div className='top-menu'>

@@ -6,8 +6,7 @@ import DateBox from '../../Common/DateBox/DateBox'
 import MessageBox from '../../Common/MessageBox/MessageBox'
 import classNames from 'classnames'
 
-export default class Card extends React.Component
-{
+export default class Card extends React.Component {
   constructor () {
     super()
     this.state = {

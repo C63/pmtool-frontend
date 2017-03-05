@@ -1,8 +1,7 @@
 import React from 'react'
 export const HORIZONTAL = 'horizontal'
 export const VERTICAL = 'vertical'
-export default class User extends React.Component
-{
+export default class User extends React.Component {
   getUserClassName () {
     const { boxOnlyMode, displayDirection } = this.props
     if (boxOnlyMode) {
