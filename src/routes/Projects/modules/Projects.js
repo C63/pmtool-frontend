@@ -1,89 +1,67 @@
 import projects from './mock.json'
-// import get from 'lodash/get'
 // ------------------------------------
 // Constants
 // ------------------------------------
-// export const LOGIN_REQUEST = 'LOGIN_REQUEST'
-// export const LOGIN_ERROR = 'LOGIN_ERROR'
-// export const LOGIN_SUCCESS = 'LOGIN_SUCCESS'
-// export const LOGOUT = 'LOGOUT'
+export const FETCH_TEAM_PROJECT_REQUEST = 'FETCH_TEAM_PROJECT_REQUEST'
+export const FETCH_TEAM_PROJECT_ERROR = 'FETCH_TEAM_PROJECT_ERROR'
+export const FETCH_TEAM_PROJECT_SUCCESS = 'FETCH_TEAM_PROJECT_SUCCESS'
 
 // ------------------------------------
 // Actions
 // ------------------------------------
 
-// export function loginRequest (data) {
-//   return {
-//     type    : LOGIN_REQUEST,
-//     payload : {
-//       data : data,
-//       isFetching: true,
-//       isAuthenticated: false
-//     }
-//   }
-// }
-//
-// export function loginSuccess (data) {
-//   return {
-//     type    : LOGIN_SUCCESS,
-//     payload : {
-//       isFetching: false,
-//       isAuthenticated: true,
-//       userToken: get(data, 'access-token')
-//     }
-//   }
-// }
-//
-// export function loginError (data) {
-//   return {
-//     type    : LOGIN_ERROR,
-//     payload : {
-//       message : data,
-//       isFetching: false,
-//       isAuthenticated: false
-//     }
-//   }
-// }
-// export function logOut () {
-//   return {
-//     type: LOGOUT
-//   }
-// }
+export function fetchTeamProjectRequest (data) {
+  return {
+    type    : FETCH_TEAM_PROJECT_REQUEST,
+    payload : {
+      data : data,
+      isFetching: true
+    }
+  }
+}
+
+export function fetchTeamProjectSuccess (data) {
+  return {
+    type    : FETCH_TEAM_PROJECT_SUCCESS,
+    payload : {
+      isFetching: false
+    }
+  }
+}
+
+export function fetchTeamProjectError (data) {
+  return {
+    type    : FETCH_TEAM_PROJECT_ERROR,
+    payload : {
+      message : data,
+      isFetching: false
+    }
+  }
+}
 
 // ------------------------------------
 // Reducer
 // ------------------------------------
 const initialState = {
-  projects: projects
+  fetchTeamProjectStatus: null,
+  projects : projects
 }
-export default function loginReducer (state = initialState, action) {
+export default function fetchTeamProjectReducer (state = initialState, action) {
   switch (action.type) {
-    // case LOGIN_REQUEST:
-    //   return Object.assign({}, state, {
-    //     isFetching: action.payload.isFetching,
-    //     isAuthenticated: action.payload.isAuthenticated
-    //   })
-    // case LOGIN_ERROR:
-    //   return Object.assign({}, state, {
-    //     loginStatus : false,
-    //     isFetching: action.payload.isFetching,
-    //     isAuthenticated: action.payload.isAuthenticated,
-    //     errorLoginMessage: action.payload.message,
-    //     userToken: ''
-    //   })
-    // case LOGIN_SUCCESS:
-    //   return Object.assign({}, state, {
-    //     loginStatus : true,
-    //     isFetching: action.payload.isFetching,
-    //     isAuthenticated: action.payload.isAuthenticated,
-    //     userToken: action.payload.userToken,
-    //     errorLoginMessage: ''
-    //   })
-    // case LOGOUT:
-    //   localStorage.clear()
-    //   return Object.assign({}, state, {
-    //     initialState
-    //   })
+    case FETCH_TEAM_PROJECT_REQUEST:
+      return Object.assign({}, state, {
+        isFetching: action.payload.isFetching
+      })
+    case FETCH_TEAM_PROJECT_ERROR:
+      return Object.assign({}, state, {
+        fetchTeamProjectStatus : false,
+        isFetching: action.payload.isFetching
+      })
+    case FETCH_TEAM_PROJECT_SUCCESS:
+      return Object.assign({}, state, {
+        fetchTeamProjectStatus : true,
+        isFetching: action.payload.isFetching
+      })
     default:
       return state
   }

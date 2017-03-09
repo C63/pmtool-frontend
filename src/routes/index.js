@@ -12,7 +12,7 @@ import TeamRoute from './Team'
 export const createRoutes = (store) => ({
   path        : '/',
   component   : CoreLayout,
-  indexRoute  : ProjectsRoute(store),
+  indexRoute  : LoginRoute(store),
   childRoutes : [
     LoginRoute(store),
     SignUpRoute(store),

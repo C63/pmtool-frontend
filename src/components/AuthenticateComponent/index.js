@@ -17,7 +17,7 @@ export function requireAuthentication (Component) {
 
     checkAuth () {
       if (this.props.isFetching || !this.props.token) {
-        browserHistory.push(`/login`)
+        browserHistory.push(`/`)
       }
     }
 
