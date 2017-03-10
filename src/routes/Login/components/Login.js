@@ -89,5 +89,5 @@ Login.propTypes = {
   dispatch: React.PropTypes.func,
   errorLoginMessage: React.PropTypes.string,
   userToken: React.PropTypes.string,
-  location: React.PropTypes.string
+  location: React.PropTypes.object
 }

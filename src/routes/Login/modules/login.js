@@ -82,7 +82,6 @@ export default function loginReducer (state = initialState, action) {
         errorLoginMessage: ''
       })
     case LOGOUT:
-      localStorage.clear()
       return Object.assign({}, state, {
         initialState
       })

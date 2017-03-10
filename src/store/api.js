@@ -2,13 +2,13 @@ import get from 'lodash/get'
 import { loginRequest, loginError, loginSuccess } from '../routes/Login/modules/login'
 import { signUpSuccess, signUpError, signUpRequest } from '../routes/SignUp/modules/signup'
 import { addTaskRequest, addTaskSuccess, addTaskError } from '../routes/ProjectDetail/modules'
-import { ROOT_URL } from './constant'
+import { DEV_URL } from './constant'
 import { fetchPost } from '../utils/fetch'
 
 export function doLogin (data) {
   return (dispatch) => {
     dispatch(loginRequest(data))
-    fetch(ROOT_URL + 'accounts/get-token', fetchPost(data))
+    fetch(DEV_URL + 'accounts/get-token', fetchPost(data))
     .then(response => {
       if (response.status === 200) {
         return response.json().then(data => {
@@ -28,7 +28,7 @@ export function doLogin (data) {
 export function doSignUp (data) {
   return (dispatch) => {
     dispatch(signUpRequest(data))
-    fetch(ROOT_URL + 'accounts/register', fetchPost(data))
+    fetch(DEV_URL + 'accounts/register', fetchPost(data))
     .then(response => {
       if (response.status === 200) {
         return response.json().then(data => {
@@ -48,7 +48,7 @@ export function doSignUp (data) {
 export function addTask (params) {
   return (dispatch) => {
     dispatch(addTaskRequest(params))
-    fetch(ROOT_URL + 'tasks', fetchPost(params))
+    fetch(DEV_URL + 'tasks', fetchPost(params))
     .then(
       response => response.json().then(data => dispatch(addTaskSuccess(data))),
       error => error.json().then(err => dispatch(addTaskError(err)))

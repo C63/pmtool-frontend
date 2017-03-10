@@ -1,10 +1,11 @@
 import React from 'react'
+import classNames from 'classnames'
+
 import CardList from '../../../components/CardList/CardList'
 import NewCardList from '../../../components/CardList/NewCardList/NewCardList'
 import lists from './MOCK_DATA.json'
 import TopMenu from '../../../components/TopMenu/TopMenu'
 import SideMenu from '../../../components/SideMenu/SideMenu'
-import classNames from 'classnames'
 
 export default class ProjectDetail extends React.Component {
   constructor () {
@@ -31,7 +32,7 @@ export default class ProjectDetail extends React.Component {
     const { listMode } = this.state
     return (
       <div className='main-container'>
-        <SideMenu />
+        <SideMenu onLogout={this.props.doLogOut} />
         <div className='project-detail'>
           <TopMenu />
           <div className='list-mode'>
@@ -56,4 +57,8 @@ export default class ProjectDetail extends React.Component {
       </div>
     )
   }
+}
+
+ProjectDetail.propTypes = {
+  doLogOut: React.PropTypes.func
 }
