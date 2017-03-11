@@ -8,3 +8,12 @@ export const fetchPost = (data) => {
     body: JSON.stringify(data)
   }
 }
+
+export const authGet = (token) => {
+  return {
+    method: 'GET',
+    headers: {
+      'Authorization' : 'Token ' + token
+    }
+  }
+}

@@ -6,7 +6,7 @@ export const LOGIN_REQUEST = 'LOGIN_REQUEST'
 export const LOGIN_ERROR = 'LOGIN_ERROR'
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS'
 export const LOGOUT = 'LOGOUT'
-
+export const GET_PROFILE = 'GET_PROFILE'
 // ------------------------------------
 // Actions
 // ------------------------------------
@@ -49,6 +49,15 @@ export function logOut () {
   }
 }
 
+export function getProfile (user) {
+  return {
+    type: GET_PROFILE,
+    payload: {
+      user: user
+    }
+  }
+}
+
 // ------------------------------------
 // Reducer
 // ------------------------------------
@@ -56,7 +65,8 @@ const initialState = {
   loginStatus: null,
   isAuthenticated : !!localStorage.getItem('userToken'),
   errorLoginMessage: '',
-  userToken: null
+  userToken: null,
+  user: {}
 }
 export default function loginReducer (state = initialState, action) {
   switch (action.type) {
@@ -84,6 +94,10 @@ export default function loginReducer (state = initialState, action) {
     case LOGOUT:
       return Object.assign({}, state, {
         initialState
+      })
+    case GET_PROFILE:
+      return Object.assign({}, state, {
+        user: action.payload.user
       })
     default:
       return state

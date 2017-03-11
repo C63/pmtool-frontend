@@ -1,9 +1,9 @@
 import get from 'lodash/get'
-import { loginRequest, loginError, loginSuccess } from '../routes/Login/modules/login'
+import { loginRequest, loginError, loginSuccess, getProfile } from '../routes/Login/modules/login'
 import { signUpSuccess, signUpError, signUpRequest } from '../routes/SignUp/modules/signup'
 import { addTaskRequest, addTaskSuccess, addTaskError } from '../routes/ProjectDetail/modules'
 import { DEV_URL } from './constant'
-import { fetchPost } from '../utils/fetch'
+import { fetchPost, authGet } from '../utils/fetch'
 
 export function doLogin (data) {
   return (dispatch) => {
@@ -52,6 +52,15 @@ export function addTask (params) {
     .then(
       response => response.json().then(data => dispatch(addTaskSuccess(data))),
       error => error.json().then(err => dispatch(addTaskError(err)))
+    )
+  }
+}
+
+export function getUserProfile () {
+  return (dispatch) => {
+    fetch(DEV_URL + 'accounts/profile', authGet(localStorage.getItem('userToken')))
+    .then(
+      response => response.json().then(data => dispatch(getProfile(data)))
     )
   }
 }
