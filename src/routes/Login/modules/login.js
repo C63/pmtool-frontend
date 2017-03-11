@@ -1,4 +1,6 @@
 import get from 'lodash/get'
+import { user as userSchemas } from '../../../store/schemas'
+import normalize from '../../../utils/normalize'
 // ------------------------------------
 // Constants
 // ------------------------------------
@@ -53,7 +55,7 @@ export function getProfile (user) {
   return {
     type: GET_PROFILE,
     payload: {
-      user: user
+      user: normalize(user, userSchemas)
     }
   }
 }
