@@ -9,7 +9,7 @@ class Projects extends React.Component {
     const { projects } = this.props
     return (
       <div className='main-container'>
-        <SideMenu />
+        <SideMenu onLogout={this.props.doLogOut} />
         <div className='projects-dashboard'>
           <TopMenu />
           <ProjectTeamList projects={projects} />
@@ -23,5 +23,6 @@ class Projects extends React.Component {
 export default Projects
 
 Projects.propTypes = {
-  projects: React.PropTypes.array
+  projects: React.PropTypes.array,
+  doLogOut: React.PropTypes.func
 }

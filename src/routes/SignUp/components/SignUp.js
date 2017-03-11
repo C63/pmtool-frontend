@@ -10,14 +10,14 @@ export default class SignUp extends React.Component {
   }
 
   shouldComponentUpdate (nextProps) {
-    if (nextProps.userToken !== this.props.userToken) {
+    if (nextProps.isAuthenticated !== this.props.isAuthenticated) {
       return false
     }
     return true
   }
 
   componentWillReceiveProps (nextProps) {
-    if (nextProps.userToken) {
+    if (nextProps.isAuthenticated) {
       browserHistory.push('/project')
     }
   }
@@ -87,5 +87,5 @@ SignUp.propTypes = {
   signUpStatus: React.PropTypes.bool,
   dispatch: React.PropTypes.func,
   errorSignUpMessage: React.PropTypes.string,
-  userToken: React.PropTypes.string
+  isAuthenticated: React.PropTypes.bool
 }

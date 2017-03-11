@@ -7,7 +7,7 @@ const SideMenu = ({ onLogout }) => {
   const user = {
     full_name: 'Phuc Doan'
   }
-
+// TODO: remove this passing Logout as props
   const logOut = () => {
     localStorage.clear()
     onLogout()

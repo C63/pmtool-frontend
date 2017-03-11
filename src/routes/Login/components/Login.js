@@ -17,11 +17,9 @@ export default class Login extends React.Component {
   }
 
   componentWillReceiveProps (nextProps) {
-    if (nextProps.userToken) {
-    }
-    if (nextProps.userToken) {
+    if (nextProps.isAuthenticated) {
       if (this.props.location.pathname === '/') {
-        browserHistory.push('/project')
+        browserHistory.push('/projects')
       } else {
         browserHistory.goBack()
       }
@@ -88,6 +86,6 @@ Login.propTypes = {
   loginStatus: React.PropTypes.bool,
   dispatch: React.PropTypes.func,
   errorLoginMessage: React.PropTypes.string,
-  userToken: React.PropTypes.string,
-  location: React.PropTypes.object
+  location: React.PropTypes.object,
+  isAuthenticated: React.PropTypes.bool
 }
