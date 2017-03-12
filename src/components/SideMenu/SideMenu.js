@@ -3,11 +3,10 @@ import UserItem from '../User/UserItem/UserItem'
 import { Link, browserHistory } from 'react-router'
 import { Button } from 'react-bootstrap'
 
-const SideMenu = ({ onLogout, user }) => {
+const SideMenu = ({ user }) => {
 // TODO: remove this passing Logout as props
   const logOut = () => {
     sessionStorage.clear()
-    onLogout()
     browserHistory.push('/')
   }
 

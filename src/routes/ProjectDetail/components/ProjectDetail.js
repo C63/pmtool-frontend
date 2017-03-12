@@ -32,7 +32,7 @@ export default class ProjectDetail extends React.Component {
     const { listMode } = this.state
     return (
       <div className='main-container'>
-        <SideMenu onLogout={this.props.doLogOut} />
+        <SideMenu />
         <div className='project-detail'>
           <TopMenu />
           <div className='list-mode'>

@@ -5,7 +5,6 @@
 export const LOGIN_REQUEST = 'LOGIN_REQUEST'
 export const LOGIN_ERROR = 'LOGIN_ERROR'
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS'
-export const LOGOUT = 'LOGOUT'
 export const GET_PROFILE = 'GET_PROFILE'
 // ------------------------------------
 // Actions
@@ -39,11 +38,6 @@ export function loginError (data) {
       isFetching: false,
       isAuthenticated: false
     }
-  }
-}
-export function logOut () {
-  return {
-    type: LOGOUT
   }
 }
 
@@ -84,10 +78,6 @@ export default function loginReducer (state = initialState, action) {
         loginStatus : true,
         isFetching: action.payload.isFetching,
         errorLoginMessage: ''
-      })
-    case LOGOUT:
-      return Object.assign({}, state, {
-        initialState
       })
     case GET_PROFILE:
       return Object.assign({}, state, {
