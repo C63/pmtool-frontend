@@ -1,15 +1,16 @@
 import { connect } from 'react-redux'
-import { getUserProfile } from '../../../store/api'
-import { bindActionCreators } from 'redux'
+import { getUserTeam, getTeamProject } from '../../../store/api'
 
 import Projects from '../components/Projects'
 
 const mapStateToProps = (state) => ({
-  projects : state.projects.projects
+  projects : state.projects.projects,
+  teams: state.projects.teams
 })
 
 const mapDispatchToProps = (dispatch) => ({
-  getProfile: bindActionCreators(getUserProfile, dispatch)
+  fetchUserTeam: () => (dispatch(getUserTeam())),
+  fetchTeamProject: () => (dispatch(getTeamProject()))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Projects)

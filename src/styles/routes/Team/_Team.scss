@@ -17,12 +17,14 @@
       background: white;
     }
   }
-  &__name{
+  &__header{
     display: flex;
     justify-content: space-between;
     font-size: $large-font-size;
     font-weight: $heavy-font-weight;
     color: $card-text;
+    margin-bottom: 2*$base-margin;
+    margin-top: 4*$base-margin;
     button{
       border: none;
       background: transparent;

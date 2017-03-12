@@ -1,3 +1,5 @@
+const token = sessionStorage.getItem('userToken')
+
 export const fetchPost = (data) => {
   return {
     method: 'POST',
@@ -9,11 +11,20 @@ export const fetchPost = (data) => {
   }
 }
 
-export const authGet = (token) => {
+export const authGet = () => {
   return {
-    method: 'GET',
     headers: {
       'Authorization' : 'Token ' + token
     }
+  }
+}
+
+export const authPost = (data) => {
+  return {
+    method: 'POST',
+    headers: {
+      'Authorization' : 'Token ' + token
+    },
+    body: JSON.stringify(data)
   }
 }

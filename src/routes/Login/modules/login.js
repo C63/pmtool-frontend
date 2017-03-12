@@ -10,11 +10,10 @@ export const GET_PROFILE = 'GET_PROFILE'
 // Actions
 // ------------------------------------
 
-export function loginRequest (data) {
+export function loginRequest () {
   return {
     type    : LOGIN_REQUEST,
     payload : {
-      data : data,
       isFetching: true,
       isAuthenticated: false
     }

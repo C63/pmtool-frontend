@@ -1,40 +1,65 @@
-import projects from './mock.json'
+import get from 'lodash/get'
 // ------------------------------------
 // Constants
 // ------------------------------------
-export const FETCH_TEAM_PROJECT_REQUEST = 'FETCH_TEAM_PROJECT_REQUEST'
-export const FETCH_TEAM_PROJECT_ERROR = 'FETCH_TEAM_PROJECT_ERROR'
-export const FETCH_TEAM_PROJECT_SUCCESS = 'FETCH_TEAM_PROJECT_SUCCESS'
+export const GET_TEAMS = 'GET_TEAMS'
+
+export const CREATE_TEAM_REQUEST = 'CREATE_TEAM_REQUEST'
+export const CREATE_TEAM_SUCCESS = 'CREATE_TEAM_SUCCESS'
+export const CREATE_TEAM_ERROR = 'CREATE_TEAM_ERROR'
+
+export const GET_TEAM_PROJECT = 'GET_TEAM_PROJECT'
 
 // ------------------------------------
 // Actions
 // ------------------------------------
 
-export function fetchTeamProjectRequest (data) {
+export function getProjects (projects, teamId) {
   return {
-    type    : FETCH_TEAM_PROJECT_REQUEST,
+    type    : GET_TEAM_PROJECT,
     payload : {
-      data : data,
+      projects : projects,
+      teamId : teamId
+    }
+  }
+}
+
+export function getTeams (teams) {
+  return {
+    type : GET_TEAMS,
+    payload: {
+      teams: teams
+    }
+  }
+}
+
+export function createTeamRequest (params) {
+  return {
+    type: CREATE_TEAM_REQUEST,
+    payload: {
       isFetching: true
     }
   }
 }
 
-export function fetchTeamProjectSuccess (data) {
+export function createTeamSuccess (message) {
   return {
-    type    : FETCH_TEAM_PROJECT_SUCCESS,
-    payload : {
-      isFetching: false
+    type: CREATE_TEAM_SUCCESS,
+    payload: {
+      createTeamStatus: true,
+      isFetching: false,
+      message: message
     }
   }
 }
 
-export function fetchTeamProjectError (data) {
+export function createTeamError (message) {
   return {
-    type    : FETCH_TEAM_PROJECT_ERROR,
-    payload : {
-      message : data,
-      isFetching: false
+    type: CREATE_TEAM_ERROR,
+    payload: {
+      createTeamStatus: false,
+      isFetching: false,
+      message: message
     }
   }
 }
@@ -44,24 +69,49 @@ export function fetchTeamProjectError (data) {
 // ------------------------------------
 const initialState = {
   fetchTeamProjectStatus: null,
-  projects : projects
+  projects : {},
+  teams: {},
+  message: ''
 }
 export default function fetchTeamProjectReducer (state = initialState, action) {
   switch (action.type) {
-    case FETCH_TEAM_PROJECT_REQUEST:
+    case GET_TEAM_PROJECT:
+      if (!action.payload.teamId) {
+        return Object.assign({}, state, {
+          projects: action.payload.projects
+        })
+      } else {
+        return Object.assign({}, state, {
+          teams: state.teams.reduce(team => {
+            if (action.payload.teamId === get(team, 'team-id')) {
+              team.projects = action.payload.projects
+            }
+          })
+        })
+      }
+    case GET_TEAMS:
+      return Object.assign({}, state, {
+        teams: action.payload.teams
+      })
+    case CREATE_TEAM_REQUEST: {
       return Object.assign({}, state, {
         isFetching: action.payload.isFetching
       })
-    case FETCH_TEAM_PROJECT_ERROR:
+    }
+    case CREATE_TEAM_SUCCESS: {
       return Object.assign({}, state, {
-        fetchTeamProjectStatus : false,
-        isFetching: action.payload.isFetching
+        createTeamStatus: action.payload.createTeamStatus,
+        isFetching: action.payload.isFetching,
+        message: action.payload.message
       })
-    case FETCH_TEAM_PROJECT_SUCCESS:
+    }
+    case CREATE_TEAM_ERROR: {
       return Object.assign({}, state, {
-        fetchTeamProjectStatus : true,
-        isFetching: action.payload.isFetching
+        createTeamStatus: action.payload.createTeamStatus,
+        isFetching: action.payload.isFetching,
+        message: action.payload.message
       })
+    }
     default:
       return state
   }
