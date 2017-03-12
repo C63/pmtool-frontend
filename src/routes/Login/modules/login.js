@@ -1,6 +1,4 @@
-import get from 'lodash/get'
-import { user as userSchemas } from '../../../store/schemas'
-import normalize from '../../../utils/normalize'
+
 // ------------------------------------
 // Constants
 // ------------------------------------
@@ -28,9 +26,7 @@ export function loginSuccess (data) {
   return {
     type    : LOGIN_SUCCESS,
     payload : {
-      isFetching: false,
-      isAuthenticated: true,
-      userToken: get(data, 'access-token')
+      isFetching: false
     }
   }
 }
@@ -51,11 +47,11 @@ export function logOut () {
   }
 }
 
-export function getProfile (user) {
+export function getProfile () {
   return {
     type: GET_PROFILE,
     payload: {
-      user: normalize(user, userSchemas)
+      isAuthenticated: true
     }
   }
 }
@@ -67,8 +63,7 @@ const initialState = {
   loginStatus: null,
   isAuthenticated : !!localStorage.getItem('userToken'),
   errorLoginMessage: '',
-  userToken: null,
-  user: {}
+  isFetching: false
 }
 export default function loginReducer (state = initialState, action) {
   switch (action.type) {
@@ -82,15 +77,12 @@ export default function loginReducer (state = initialState, action) {
         loginStatus : false,
         isFetching: action.payload.isFetching,
         isAuthenticated: action.payload.isAuthenticated,
-        errorLoginMessage: action.payload.message,
-        userToken: ''
+        errorLoginMessage: action.payload.message
       })
     case LOGIN_SUCCESS:
       return Object.assign({}, state, {
         loginStatus : true,
         isFetching: action.payload.isFetching,
-        isAuthenticated: action.payload.isAuthenticated,
-        userToken: action.payload.userToken,
         errorLoginMessage: ''
       })
     case LOGOUT:
@@ -99,7 +91,7 @@ export default function loginReducer (state = initialState, action) {
       })
     case GET_PROFILE:
       return Object.assign({}, state, {
-        user: action.payload.user
+        isAuthenticated: action.payload.isAuthenticated
       })
     default:
       return state

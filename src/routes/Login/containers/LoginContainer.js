@@ -19,7 +19,8 @@ const mapDispatchToProps = (dispatch) => ({
 const mapStateToProps = (state) => ({
   loginStatus : state.login.loginStatus,
   errorLoginMessage : state.login.errorLoginMessage,
-  isAuthenticated: state.login.isAuthenticated
+  isAuthenticated: state.login.isAuthenticated,
+  isFetching: state.login.isFetching
 })
 
 /*  Note: mapStateToProps is where you should use `reselect` to create selectors, ie:

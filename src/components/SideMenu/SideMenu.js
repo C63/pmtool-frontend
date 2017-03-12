@@ -3,16 +3,14 @@ import UserItem from '../User/UserItem/UserItem'
 import { Link, browserHistory } from 'react-router'
 import { Button } from 'react-bootstrap'
 
-const SideMenu = ({ onLogout }) => {
-  const user = {
-    full_name: 'Phuc Doan'
-  }
+const SideMenu = ({ onLogout, user }) => {
 // TODO: remove this passing Logout as props
   const logOut = () => {
-    localStorage.clear()
+    sessionStorage.clear()
     onLogout()
     browserHistory.push('/')
   }
+
   return (
     <div className='side-menu'>
       <div className='side-menu__user'>
@@ -37,7 +35,8 @@ const SideMenu = ({ onLogout }) => {
 }
 
 SideMenu.propTypes = {
-  onLogout: React.PropTypes.func
+  onLogout: React.PropTypes.func,
+  user: React.PropTypes.object
 }
 
 export default SideMenu

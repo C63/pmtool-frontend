@@ -5,15 +5,12 @@ import SideMenu from '../../../components/SideMenu/SideMenu'
 
 class Projects extends React.Component {
 
-  componentWillMount () {
-    this.props.getProfile()
-  }
-
   render () {
     const { projects } = this.props
+    const user = JSON.parse(sessionStorage.getItem('userInfo'))
     return (
       <div className='main-container'>
-        <SideMenu onLogout={this.props.doLogOut} user={this.props.user} />
+        <SideMenu onLogout={this.props.doLogOut} user={user} />
         <div className='projects-dashboard'>
           <TopMenu />
           <ProjectTeamList projects={projects} />

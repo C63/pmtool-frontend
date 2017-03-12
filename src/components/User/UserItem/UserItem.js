@@ -16,15 +16,14 @@ export default class User extends React.Component {
   render () {
     const { user } = this.props
     const className = this.getUserClassName()
-
     return (
       <div className={className}>
         <div className='user'>
-          <span>{user.full_name.replace(/[^A-Z]/g, '')}</span>
+          <span>{user.name.match(/\b\w/g).join('')}</span>
         </div>
         <div className='user-detail'>
-          <p>{user.full_name}</p>
-          <p>@{user.full_name.split(' ')[0]}</p>
+          <p>{user.name}</p>
+          <p>@{user.name.split(' ')[0]}</p>
         </div>
       </div>
     )

@@ -12,14 +12,15 @@ export function doLogin (data) {
     .then(response => {
       if (response.status === 200) {
         return response.json().then(data => {
-          localStorage.setItem('userToken', get(data, 'access-token'))
+          sessionStorage.setItem('userToken', get(data, 'access-token'))
+          dispatch(getUserProfile())
           return dispatch(loginSuccess(data))
         })
       }
       return Promise.reject(response.statusText)
     })
     .catch(error => {
-      localStorage.clear()
+      sessionStorage.clear()
       return dispatch(loginError(error))
     })
   }
@@ -32,14 +33,15 @@ export function doSignUp (data) {
     .then(response => {
       if (response.status === 200) {
         return response.json().then(data => {
-          localStorage.setItem('userToken', get(data, 'access-token'))
+          sessionStorage.setItem('userToken', get(data, 'access-token'))
+          dispatch(getUserProfile())
           return dispatch(signUpSuccess(data))
         })
       }
       return Promise.reject(response)
     })
     .catch(error => {
-      localStorage.clear()
+      sessionStorage.clear()
       return error.json().then(errmes => dispatch(signUpError(errmes.exception)))
     })
   }
@@ -58,9 +60,12 @@ export function addTask (params) {
 
 export function getUserProfile () {
   return (dispatch) => {
-    fetch(DEV_URL + 'accounts/profile', authGet(localStorage.getItem('userToken')))
+    fetch(DEV_URL + 'accounts/profile', authGet(sessionStorage.getItem('userToken')))
     .then(
-      response => response.json().then(data => dispatch(getProfile(data)))
+      response => response.json().then(data => {
+        sessionStorage.setItem('userInfo', JSON.stringify(data))
+        return dispatch(getProfile())
+      })
     )
   }
 }

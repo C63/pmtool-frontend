@@ -47,7 +47,7 @@ export function requireAuthentication (Component) {
   }
 
   AuthenticatedComponent.defaultProps = {
-    token : localStorage.getItem('userToken')
+    token : sessionStorage.getItem('userToken')
   }
 
   return connect(mapStateToProps)(AuthenticatedComponent)
