@@ -1,5 +1,4 @@
 import get from 'lodash/get'
-import isEmpty from 'lodash/isEmpty'
 import { loginRequest, loginError, loginSuccess, getProfile } from '../routes/Login/modules/login'
 import { signUpSuccess, signUpError, signUpRequest } from '../routes/SignUp/modules/signup'
 import { addTaskRequest, addTaskSuccess, addTaskError } from '../routes/ProjectDetail/modules'
@@ -79,9 +78,6 @@ export function getUserTeam () {
     fetch(DEV_URL + 'teams', authGet())
     .then(
       response => response.json().then(data => {
-        if (!isEmpty(data)) {
-          data.map(team => dispatch(getTeamProject(get(team, 'team-id'))))
-        }
         return dispatch(getTeams(data))
       })
     )

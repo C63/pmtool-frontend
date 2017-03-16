@@ -1,4 +1,6 @@
-import get from 'lodash/get'
+import { normalize } from 'normalizr'
+import Immutable from 'immutable'
+import { teams as teamSchemas, projects as projectSchemas } from '../../../store/schemas'
 // ------------------------------------
 // Constants
 // ------------------------------------
@@ -18,7 +20,7 @@ export function getProjects (projects, teamId) {
   return {
     type    : GET_TEAM_PROJECT,
     payload : {
-      projects : projects,
+      projects : normalize(projects, projectSchemas),
       teamId : teamId
     }
   }
@@ -28,7 +30,7 @@ export function getTeams (teams) {
   return {
     type : GET_TEAMS,
     payload: {
-      teams: teams
+      teams: normalize(teams, teamSchemas)
     }
   }
 }
@@ -67,32 +69,19 @@ export function createTeamError (message) {
 // ------------------------------------
 // Reducer
 // ------------------------------------
-const initialState = {
+const initialState = Immutable.Map({
   fetchTeamProjectStatus: null,
-  projects : {},
-  teams: {},
+  projects : Immutable.List(),
+  teams: Immutable.List(),
   message: ''
-}
-export default function fetchTeamProjectReducer (state = initialState, action) {
+})
+
+function fetchTeamProjectReducer (state = initialState, action) {
   switch (action.type) {
     case GET_TEAM_PROJECT:
-      if (!action.payload.teamId) {
-        return Object.assign({}, state, {
-          projects: action.payload.projects
-        })
-      } else {
-        return Object.assign({}, state, {
-          teams: state.teams.reduce(team => {
-            if (action.payload.teamId === get(team, 'team-id')) {
-              team.projects = action.payload.projects
-            }
-          })
-        })
-      }
+      return state.set('projects', action.payload.projects.entities.projects)
     case GET_TEAMS:
-      return Object.assign({}, state, {
-        teams: action.payload.teams
-      })
+      return state.set('teams', action.payload.teams.entities.team)
     case CREATE_TEAM_REQUEST: {
       return Object.assign({}, state, {
         isFetching: action.payload.isFetching
@@ -116,3 +105,5 @@ export default function fetchTeamProjectReducer (state = initialState, action) {
       return state
   }
 }
+
+export default fetchTeamProjectReducer

@@ -8,7 +8,6 @@ class ProjectTeamList extends React.Component {
 
   render () {
     const { teams, createProject, addTeam } = this.props
-    console.log(teams)
     return (
       <div className='project-teams'>
         { !isEmpty(teams) &&
@@ -17,7 +16,7 @@ class ProjectTeamList extends React.Component {
               return (
                 <div className='team' key={index}>
                   <div className='team__header'>
-                    <span className='team__name'>{team.name}</span>
+                    <span className='team__name'>{team.get('name')}</span>
                     <Button onClick={createProject}>+</Button>
                   </div>
                   <ProjectList projects={team.projects} />
