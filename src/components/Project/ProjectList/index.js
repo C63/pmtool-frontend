@@ -8,17 +8,23 @@ class ProjectList extends React.Component {
     return (
       <div className='team__projects'>
         <div className='row'>
-          {projects.map((project, index) => {
-            return (
-              <div className='col-sm-3 team__projects__box' key={index} >
-                <div className='team__projects__project'>
-                  <Link to={`/project`}>
-                    <span>{project.name}</span>
-                  </Link>
+          {projects &&
+            projects.map((project, index) => {
+              return (
+                <div className='col-sm-3 team__projects__box' key={index} >
+                  <div className='team__projects__project'>
+                    <Link to={`/project`}>
+                      <span>{project.get('name')}</span>
+                    </Link>
+                  </div>
                 </div>
-              </div>
-            )
-          })}
+              )
+            })}
+          { !projects &&
+            <div className='col-sm-12'>
+              <div className='no-projects'>No projects</div>
+            </div>
+          }
         </div>
       </div>
     )
@@ -26,8 +32,11 @@ class ProjectList extends React.Component {
 
 }
 
-export default ProjectList
-
 ProjectList.propTypes = {
-  projects: React.PropTypes.array
+  projects: React.PropTypes.oneOfType([
+    React.PropTypes.array,
+    React.PropTypes.object
+  ])
 }
+
+export default ProjectList

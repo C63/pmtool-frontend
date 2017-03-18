@@ -87,7 +87,7 @@ export function getUserTeam () {
 export function createTeam (params) {
   return (dispatch) => {
     dispatch(createTeamRequest(params))
-    fetch(DEV_URL + 'teams', authGet())
+    fetch(DEV_URL + 'teams', authPost(params))
     .then(response => {
       if (response.status === 201) {
         return response.json().then(team => {
@@ -117,7 +117,7 @@ export function getTeamProject (teamId) {
 export function createTeamProject (params) {
   return (dispatch) => {
     dispatch(createProjectRequest(params))
-    fetch(DEV_URL + 'projects', authPost())
+    fetch(DEV_URL + 'projects', authPost(params))
     .then(response => {
       if (response.status === 201) {
         return response.json().then(team => {

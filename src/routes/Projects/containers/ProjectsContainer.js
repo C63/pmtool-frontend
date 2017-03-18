@@ -4,8 +4,8 @@ import { getUserTeam, getTeamProject } from '../../../store/api'
 import Projects from '../components/Projects'
 
 const mapStateToProps = (state) => ({
-  projects : state.projects.projects,
-  teams: state.projects.teams
+  projects : state.projects.get('projects'),
+  teams: state.projects.get('teams')
 })
 
 const mapDispatchToProps = (dispatch) => ({

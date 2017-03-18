@@ -1,6 +1,5 @@
-import { normalize } from 'normalizr'
-import Immutable from 'immutable'
-import { teams as teamSchemas, projects as projectSchemas } from '../../../store/schemas'
+import Immutable, { fromJS } from 'immutable'
+import get from 'lodash/get'
 // ------------------------------------
 // Constants
 // ------------------------------------
@@ -9,6 +8,10 @@ export const GET_TEAMS = 'GET_TEAMS'
 export const CREATE_TEAM_REQUEST = 'CREATE_TEAM_REQUEST'
 export const CREATE_TEAM_SUCCESS = 'CREATE_TEAM_SUCCESS'
 export const CREATE_TEAM_ERROR = 'CREATE_TEAM_ERROR'
+
+export const CREATE_PROJECT_REQUEST = 'CREATE_PROJECT_REQUEST'
+export const CREATE_PROJECT_SUCCESS = 'CREATE_PROJECT_SUCCESS'
+export const CREATE_PROJECT_ERROR = 'CREATE_PROJECT_ERROR'
 
 export const GET_TEAM_PROJECT = 'GET_TEAM_PROJECT'
 
@@ -20,7 +23,7 @@ export function getProjects (projects, teamId) {
   return {
     type    : GET_TEAM_PROJECT,
     payload : {
-      projects : normalize(projects, projectSchemas),
+      projects : projects,
       teamId : teamId
     }
   }
@@ -30,7 +33,7 @@ export function getTeams (teams) {
   return {
     type : GET_TEAMS,
     payload: {
-      teams: normalize(teams, teamSchemas)
+      teams: teams
     }
   }
 }
@@ -44,13 +47,13 @@ export function createTeamRequest (params) {
   }
 }
 
-export function createTeamSuccess (message) {
+export function createTeamSuccess (data) {
   return {
     type: CREATE_TEAM_SUCCESS,
     payload: {
       createTeamStatus: true,
       isFetching: false,
-      message: message
+      teams: [data]
     }
   }
 }
@@ -60,6 +63,37 @@ export function createTeamError (message) {
     type: CREATE_TEAM_ERROR,
     payload: {
       createTeamStatus: false,
+      isFetching: false,
+      message: message
+    }
+  }
+}
+
+export function createProjectRequest (params) {
+  return {
+    type: CREATE_PROJECT_REQUEST,
+    payload: {
+      isFetching: true
+    }
+  }
+}
+
+export function createProjectSuccess (data) {
+  return {
+    type: CREATE_PROJECT_SUCCESS,
+    payload: {
+      createProjectStatus: true,
+      isFetching: false,
+      project: data
+    }
+  }
+}
+
+export function createProjectError (message) {
+  return {
+    type: CREATE_PROJECT_ERROR,
+    payload: {
+      createProjectStatus: false,
       isFetching: false,
       message: message
     }
@@ -79,27 +113,33 @@ const initialState = Immutable.Map({
 function fetchTeamProjectReducer (state = initialState, action) {
   switch (action.type) {
     case GET_TEAM_PROJECT:
-      return state.set('projects', action.payload.projects.entities.projects)
+      return state.merge(action.payload)
     case GET_TEAMS:
-      return state.set('teams', action.payload.teams.entities.team)
+      return state.merge(action.payload)
     case CREATE_TEAM_REQUEST: {
-      return Object.assign({}, state, {
-        isFetching: action.payload.isFetching
-      })
+      return state.merge(action.payload)
     }
     case CREATE_TEAM_SUCCESS: {
-      return Object.assign({}, state, {
-        createTeamStatus: action.payload.createTeamStatus,
-        isFetching: action.payload.isFetching,
-        message: action.payload.message
-      })
+      return state.mergeDeep(action.payload)
     }
     case CREATE_TEAM_ERROR: {
-      return Object.assign({}, state, {
-        createTeamStatus: action.payload.createTeamStatus,
-        isFetching: action.payload.isFetching,
-        message: action.payload.message
-      })
+      return state.merge(action.payload)
+    }
+    case CREATE_PROJECT_REQUEST: {
+      return state.merge(action.payload)
+    }
+    case CREATE_PROJECT_SUCCESS: {
+      if (get(action.payload.project, 'team-id')) {
+        return state.update('teams', teams => teams.map(team => {
+          if (team.get('team-id') === get(action.payload.project, 'team-id')) {
+            return team.update('projects', arr => arr.push(fromJS(action.payload.project)))
+          }
+          return team
+        }))
+      } else return state.update('projects', arr => arr.push(fromJS(action.payload.project)))
+    }
+    case CREATE_PROJECT_ERROR: {
+      return state.merge(action.payload)
     }
     default:
       return state

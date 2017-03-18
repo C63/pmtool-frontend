@@ -23,6 +23,8 @@ export const authPost = (data) => {
   return {
     method: 'POST',
     headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
       'Authorization' : 'Token ' + token
     },
     body: JSON.stringify(data)
