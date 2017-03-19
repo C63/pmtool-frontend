@@ -9,9 +9,12 @@ export default class AddMemberPopover extends React.Component {
       <Popover id='add-member-popover' className='add-member-popover'>
         <h4>Members</h4>
         <input type='text' placeholder='Search members or teams' />
-        { users.map((user, index) => {
+        { users && users.map((user, index) => {
           return <UserItem user={user} key={index} displayDirection='horizontal' />
         }) }
+        { !users &&
+          <div className='no-user'>No user</div>
+        }
       </Popover>
     )
   }

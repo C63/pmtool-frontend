@@ -20,34 +20,26 @@ export default class Card extends React.Component {
       isOpen: !isOpen
     })
   }
-  renderCardModal () {
-    const { isOpen } = this.state
-    const { card } = this.props
-
-    if (isOpen) {
-      return <CardModal isOpen={isOpen} closeModal={this.toggleModal} card={card} />
-    }
-    return
-  }
   render () {
     const { card, listMode } = this.props
-    const CardModal = this.renderCardModal()
     return (
       <div className='card-wrap'>
         { listMode === 'vertical' &&
           <div className={classNames('card', listMode)} onClick={this.toggleModal}>
             <div className='card__userbox'>
-              <UserList users={card.users} className='card__users' />
+              <UserList className='card__users' />
             </div>
             <div className='card__header'>
-              <DateBox className='card__header__date' date={card.date_created} />
-              <MessageBox className='card__header__message' messages={card.messages} />
+              <DateBox className='card__header__date' date={card.get('date_created')} />
+              <MessageBox className='card__header__message' messages={card.get('messages')} />
             </div>
             <div className='card__content'>
-              <p>{card.card_content}</p>
+              <p>{card.get('task-description')}</p>
             </div>
             <TagList tags={card.tags} className='card__tags' />
-            { CardModal }
+            { this.state.isOpen &&
+              <CardModal isOpen={this.state.isOpen} closeModal={this.toggleModal} card={card} />
+            }
           </div>
         }
 
@@ -55,20 +47,22 @@ export default class Card extends React.Component {
           <div className={classNames('card', listMode)} onClick={this.toggleModal}>
             <div className='card-left col-sm-8'>
               <div className='card__content'>
-                <p>{card.card_content}</p>
+                <p>{card.get('description')}</p>
               </div>
               <div className='card__userbox'>
-                <UserList users={card.users} className='card__users' />
+                <UserList className='card__users' />
               </div>
             </div>
             <div className='card-right col-sm-4'>
-              <TagList tags={card.tags} className='card__tags' />
+              <TagList tags={card.get('tags')} className='card__tags' />
               <div className='card__header'>
-                <DateBox className='card__header__date' date={card.date_created} />
-                <MessageBox className='card__header__message' messages={card.messages} />
+                <DateBox className='card__header__date' date={card.get('date_created')} />
+                <MessageBox className='card__header__message' messages={card.get('messages')} />
               </div>
             </div>
-            { CardModal }
+            { this.state.isOpen &&
+              <CardModal isOpen={this.state.isOpen} closeModal={this.toggleModal} card={card} />
+            }
           </div>
         }
       </div>

@@ -17,45 +17,46 @@ export default class CardList extends React.Component {
       isOpen: !isOpen
     })
   }
-  renderCardModal () {
-    const { isOpen } = this.state
-    const { list } = this.props
-
-    if (isOpen) {
-      return <NewCardModal isOpen={isOpen} closeModal={this.toggleModal} cards={list.cards} />
-    }
-    return
-  }
   render () {
     const { list, listMode } = this.props
-    const NewCardModal = this.renderCardModal()
+    const { isOpen } = this.state
+    const listSize = list.get('tasks')
     return (
       <div className='card-list'>
         <div className='card-list__header'>
-          <span className='card-list__header__name'>{list.list_name}</span>
-          <span className='card-list__header__counter'>{list.cards.length}</span>
+          <span className='card-list__header__name'>{list.get('name')}</span>
+          { listSize ? <span className='card-list__header__counter'>{listSize.size}</span> : null}
           <span className='card-list__header__right'>
             <span className='plus' onClick={this.toggleModal}>+</span>
             <span className='dots'>...</span>
           </span>
-          {NewCardModal}
+          { isOpen &&
+            <NewCardModal
+              isOpen={isOpen}
+              closeModal={this.toggleModal}
+              taskListId={list.get('task-list-id')} />
+          }
         </div>
-        { listMode === 'vertical' &&
+        { listMode === 'vertical' && listSize &&
           <Scrollbars autoHide >
-            { list.cards.map((card) => {
+            { list.get('tasks').map((card, index) => {
               return (
-                <Card key={card.id} card={card} listMode={listMode} />
+                <Card key={index} card={card} listMode={listMode} />
               )
             })}
           </Scrollbars>
         }
 
-        { listMode === 'horizontal' &&
-          list.cards.map((card) => {
+        { listMode === 'horizontal' && listSize &&
+          list.get('tasks').map((card, index) => {
             return (
-              <Card key={card.id} card={card} listMode={listMode} />
+              <Card key={index} card={card} listMode={listMode} />
             )
           })
+        }
+
+        { !listSize &&
+          <div className='no_task'>No task</div>
         }
       </div>
     )

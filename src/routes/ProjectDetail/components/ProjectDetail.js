@@ -3,16 +3,24 @@ import classNames from 'classnames'
 
 import CardList from '../../../components/CardList/CardList'
 import NewCardList from '../../../components/CardList/NewCardList/NewCardList'
-import lists from './MOCK_DATA.json'
 import TopMenu from '../../../components/TopMenu/TopMenu'
 import SideMenu from '../../../components/SideMenu/SideMenu'
 
-export default class ProjectDetail extends React.Component {
+class ProjectDetail extends React.Component {
   constructor () {
     super()
     this.state = {
       listMode: 'vertical'
     }
+  }
+
+  getChildContext () {
+    return { projectId: this.props.params.projectId }
+  }
+
+  componentWillMount () {
+    const { params } = this.props
+    this.props.fetchTaskListId(params.projectId)
   }
 
   switchViewMode () {
@@ -30,6 +38,7 @@ export default class ProjectDetail extends React.Component {
 
   render () {
     const { listMode } = this.state
+    const { lists } = this.props
     return (
       <div className='main-container'>
         <SideMenu />
@@ -46,11 +55,17 @@ export default class ProjectDetail extends React.Component {
             </i>
           </div>
           <div className={classNames('list-container', 'list-container__' + listMode)}>
-            { lists.map((list) => {
-              return (
-                <CardList key={list.id} list={list} listMode={listMode} />
-              )
-            })}
+            { !lists.isEmpty() &&
+              lists.map((list, index) => {
+                return (
+                  <CardList key={index} list={list} listMode={listMode} />
+                )
+              })
+            }
+
+            { lists.isEmpty() &&
+              ''
+            }
             <NewCardList />
           </div>
         </div>
@@ -60,5 +75,16 @@ export default class ProjectDetail extends React.Component {
 }
 
 ProjectDetail.propTypes = {
-  doLogOut: React.PropTypes.func
+  fetchTaskListId: React.PropTypes.func,
+  params: React.PropTypes.object,
+  lists: React.PropTypes.oneOfType([
+    React.PropTypes.array,
+    React.PropTypes.object
+  ])
 }
+
+ProjectDetail.childContextTypes = {
+  projectId: React.PropTypes.string
+}
+
+export default ProjectDetail

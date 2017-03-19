@@ -3,7 +3,7 @@ import TagItem from './TagItem/TagItem'
 export default class TagList extends React.Component {
   render () {
     const { tags, className } = this.props
-    return (
+    return tags ? (
       <div className={className}>
         { tags.map((tag, index) => {
           return (
@@ -11,7 +11,7 @@ export default class TagList extends React.Component {
           )
         })}
       </div>
-    )
+    ) : null
   }
 }
 

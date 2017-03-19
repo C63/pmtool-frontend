@@ -2,20 +2,23 @@ import React from 'react'
 import { Button } from 'react-bootstrap'
 import UserItem from '../../User/UserItem/UserItem'
 
-export const CommentBox = ({ user, className }) => (
-  <div className={className}>
-    <input type='text' placeholder='Lorem ipsum dolor sit amet,
-      consectetur adipisicing elit. Fuga nostrum obcaecati doloribus labore maiores rerum adipisci'
-    />
-    <div className={className + '__bottom'}>
-      <UserItem user={user} displayDirection='horizontal' />
-      <div className={className + '__bottom__buttons'}>
-        <Button>Add</Button>
-        <Button>Cancel</Button>
+export const CommentBox = ({ className }) => {
+  const user = JSON.parse(sessionStorage.getItem('userInfo'))
+  return (
+    <div className={className}>
+      <input type='text' placeholder='Lorem ipsum dolor sit amet,
+        consectetur adipisicing elit. Fuga nostrum obcaecati doloribus labore maiores rerum adipisci'
+      />
+      <div className={className + '__bottom'}>
+        <UserItem user={user} displayDirection='horizontal' />
+        <div className={className + '__bottom__buttons'}>
+          <Button>Add</Button>
+          <Button>Cancel</Button>
+        </div>
       </div>
     </div>
-  </div>
-)
+  )
+}
 
 CommentBox.propTypes = {
   user : React.PropTypes.object,

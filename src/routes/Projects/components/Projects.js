@@ -19,10 +19,9 @@ class Projects extends React.Component {
 
   render () {
     const { teams, projects } = this.props
-    const user = JSON.parse(sessionStorage.getItem('userInfo'))
     return (
       <div className='main-container'>
-        <SideMenu onLogout={this.props.doLogOut} user={user} />
+        <SideMenu />
         <div className='projects-dashboard'>
           <TopMenu />
           <ProjectTeamList teams={teams} projects={projects} />

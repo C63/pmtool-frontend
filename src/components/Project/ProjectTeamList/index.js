@@ -34,6 +34,7 @@ class ProjectTeamList extends React.Component {
 
   render () {
     const { teams, projects } = this.props
+    const noTeamProjects = projects.filter(project => !project.get('team-id'))
     const isEmptyTeam = teams.isEmpty()
     return (
       <div className='project-teams'>
@@ -42,7 +43,7 @@ class ProjectTeamList extends React.Component {
             <span className='team__name' />
             <Button onClick={() => this.toggleProjectModal()}>+</Button>
           </div>
-          <ProjectList projects={projects} />
+          <ProjectList projects={noTeamProjects} />
         </div>
         { !isEmptyTeam &&
           teams.map((team, index) => {

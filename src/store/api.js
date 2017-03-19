@@ -1,7 +1,9 @@
 import get from 'lodash/get'
 import { loginRequest, loginError, loginSuccess, getProfile } from '../routes/Login/modules/login'
 import { signUpSuccess, signUpError, signUpRequest } from '../routes/SignUp/modules/signup'
-import { addTaskRequest, addTaskSuccess, addTaskError } from '../routes/ProjectDetail/modules'
+import { addTaskRequest, addTaskSuccess, addTaskError,
+         addListIdRequest, addListIdSuccess, addListIdError,
+         getTaskListId as fetchTaskListId } from '../routes/ProjectDetail/modules'
 import { getTeams, createTeamRequest, createTeamSuccess, createTeamError,
          getProjects, createProjectRequest, createProjectSuccess,
          createProjectError } from '../routes/Projects/modules/Projects'
@@ -53,7 +55,7 @@ export function doSignUp (data) {
 export function addTask (params) {
   return (dispatch) => {
     dispatch(addTaskRequest(params))
-    fetch(DEV_URL + 'tasks', fetchPost(params))
+    fetch(DEV_URL + 'tasks', authPost(params))
     .then(
       response => response.json().then(data => dispatch(addTaskSuccess(data))),
       error => error.json().then(err => dispatch(addTaskError(err)))
@@ -128,6 +130,47 @@ export function createTeamProject (params) {
     })
     .catch(error => {
       return dispatch(createProjectError(error))
+    })
+  }
+}
+
+/**
+ * Get project task list
+ * @params projectId
+ */
+
+export function getTaskListId (projectId) {
+  return (dispatch) => {
+    fetch(DEV_URL + 'task-lists?project-id=' + projectId, authGet())
+    .then(
+     response => response.json().then(data => {
+       return dispatch(fetchTaskListId(data))
+     })
+    )
+  }
+}
+
+/**
+ * Add new list id
+ * @param List name
+ * @param List description
+ * @param Project Id
+ */
+
+export function addListId (params) {
+  return (dispatch) => {
+    dispatch(addListIdRequest(params))
+    fetch(DEV_URL + 'task-lists', authPost(params))
+    .then(response => {
+      if (response.status === 201) {
+        return response.json().then(lists => {
+          return dispatch(addListIdSuccess(lists))
+        })
+      }
+      return dispatch(addListIdError(response))
+    })
+    .catch(error => {
+      return dispatch(addListIdError(error))
     })
   }
 }

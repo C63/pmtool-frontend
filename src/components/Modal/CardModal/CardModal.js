@@ -6,57 +6,51 @@ import DateBox from '../../Common/DateBox/DateBox'
 import MessageBox from '../../Common/MessageBox/MessageBox'
 import CommentBox from '../../Common/CommentBox/CommentBox'
 import CommentList from '../../Comment/CommentList/CommentList'
-import comments from './mock_comments.json'
 
 export default class CardModal extends React.Component {
-  renderCardModal () {
-    const { card } = this.props
-    return (
-      <div className='card-modal'>
-        <Modal.Header closeButton />
-        <Modal.Body>
-          <div className='card-modal__status'>
-            <DateBox className='card-modal__status__date' date={card.date_created} />
-            <MessageBox className='card-modal__status__message' messages={card.messages} />
-            <div className='card-modal__status__star'>
-              <i className='material-icons'>star_border</i>
-              <i className='material-icons'>star_border</i>
-              <i className='material-icons'>star_border</i>
-              <i className='material-icons'>star_border</i>
-              <i className='material-icons'>star_border</i>
-            </div>
-          </div>
-          <div className='card-modal__header'>
-            <span className='card-modal__header__title'>
-              {card.card_content}
-              <p className='card-modal__header__status'>
-                Started
-              </p>
-            </span>
-          </div>
-          <UserList className='card-modal__userlist' users={card.users} />
-          <div className='card-modal__task-description'>
-            <h3>Task Description</h3>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-              Excepturi consectetur ab voluptatum officiis architecto,
-              officia dignissimos qui ipsa molestiae eligendi iusto facilis mollitia incidunt
-              , eaque vero nemo eveniet autem nobis.
-            </p>
-          </div>
-          <div className='card-modal__activity'>
-            <h3>Activity</h3>
-            <CommentBox user={card.users[0]} className={'card-modal__activity__comment-box'} />
-          </div>
-          <CommentList comments={comments} className='card-modal__comments' />
-        </Modal.Body>
-      </div>
-    )
-  }
   render () {
-    const { isOpen, closeModal } = this.props
-    const cardModalContent = this.renderCardModal()
+    const { isOpen, card, closeModal } = this.props
     return (
-      <CoreModal isOpen={isOpen} closeModal={closeModal} children={cardModalContent} />
+      <CoreModal isOpen={isOpen} closeModal={closeModal} >
+        <div className='card-modal'>
+          <Modal.Header closeButton />
+          <Modal.Body>
+            <div className='card-modal__status'>
+              <DateBox className='card-modal__status__date' date={card.get('date_created')} />
+              <MessageBox className='card-modal__status__message' messages={card.get('messages')} />
+              <div className='card-modal__status__star'>
+                <i className='material-icons'>star_border</i>
+                <i className='material-icons'>star_border</i>
+                <i className='material-icons'>star_border</i>
+                <i className='material-icons'>star_border</i>
+                <i className='material-icons'>star_border</i>
+              </div>
+            </div>
+            <div className='card-modal__header'>
+              <span className='card-modal__header__title'>
+                {card.get('description')}
+                <p className='card-modal__header__status'>
+                  Started
+                </p>
+              </span>
+            </div>
+            <UserList className='card-modal__userlist' />
+            <div className='card-modal__task-description'>
+              <h3>Task Description</h3>
+              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                Excepturi consectetur ab voluptatum officiis architecto,
+                officia dignissimos qui ipsa molestiae eligendi iusto facilis mollitia incidunt
+                , eaque vero nemo eveniet autem nobis.
+              </p>
+            </div>
+            <div className='card-modal__activity'>
+              <h3>Activity</h3>
+              <CommentBox className={'card-modal__activity__comment-box'} />
+            </div>
+            <CommentList comments={card.get('comments')} className='card-modal__comments' />
+          </Modal.Body>
+        </div>
+      </CoreModal>
     )
   }
 }

@@ -1,36 +1,54 @@
 import React from 'react'
-import { Modal, Button } from 'react-bootstrap'
+import { Modal, Button, FormControl, FormGroup } from 'react-bootstrap'
+import { findDOMNode } from 'react-dom'
+import { connect } from 'react-redux'
+
 import CoreModal from '../CoreModal'
 import UserList from '../../User/UserList/UserList'
-export default class NewCardModal extends React.Component {
-  renderCardModal () {
-    const { cards } = this.props
-    return (
-      <div className='new-card-modal'>
-        <Modal.Header closeButton>
-          <h2>Add new task</h2>
-        </Modal.Header>
-        <Modal.Body>
-          <div className='new-card-modal'>
-            <h3>Task name</h3>
-            <input type='text' placeholder='Lorem isum wao' />
-            <h3>Description</h3>
-            <input type='text' placeholder='Lirem isum dkm' />
-            <h3>People</h3>
-            <UserList users={cards[0].users} className='new-card-modal__people' />
-          </div>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button>Add task</Button>
-        </Modal.Footer>
-      </div>
-    )
+import { addTask } from '../../../store/api'
+
+class NewCardModal extends React.Component {
+  constructor () {
+    super()
+    this.onAddTask = this.onAddTask.bind(this)
+  }
+
+  onAddTask (e) {
+    e.preventDefault()
+    this.props.closeModal()
+    this.props.addTask({
+      'name' : findDOMNode(this.refs.task_name).value,
+      'description': findDOMNode(this.refs.task_desc).value,
+      'task-list-id': this.props.taskListId
+    })
   }
   render () {
     const { isOpen, closeModal } = this.props
-    const cardModalContent = this.renderCardModal()
+    const user = JSON.parse(sessionStorage.getItem('userInfo'))
+    let users = new Array(user)
     return (
-      <CoreModal isOpen={isOpen} closeModal={closeModal} children={cardModalContent} />
+      <CoreModal isOpen={isOpen} closeModal={closeModal}>
+        <form className='new-card-modal' onSubmit={this.onAddTask}>
+          <Modal.Header closeButton>
+            <h2>Add new task</h2>
+          </Modal.Header>
+          <Modal.Body>
+            <div className='new-card-modal'>
+              <FormGroup>
+                <h3>Task name</h3>
+                <FormControl placeholder='Insert task name' ref='task_name' />
+                <h3>Description</h3>
+                <FormControl placeholder='Insert task description' ref='task_desc' />
+                <h3>People</h3>
+                <UserList users={users} className='new-card-modal__people' />
+              </FormGroup>
+            </div>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button type='submit'>Add task</Button>
+          </Modal.Footer>
+        </form>
+      </CoreModal>
     )
   }
 }
@@ -38,5 +56,11 @@ export default class NewCardModal extends React.Component {
 NewCardModal.propTypes = {
   isOpen : React.PropTypes.bool,
   closeModal : React.PropTypes.func,
-  cards: React.PropTypes.array
+  addTask: React.PropTypes.func,
+  taskListId: React.PropTypes.string
 }
+const mapStateToProps = () => ({})
+const mapDispatchToProps = (dispatch) => ({
+  addTask: (params) => dispatch(addTask(params))
+})
+export default connect(mapStateToProps, mapDispatchToProps)(NewCardModal)
