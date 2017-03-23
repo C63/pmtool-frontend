@@ -16,7 +16,7 @@ export default class User extends React.Component {
   render () {
     const { user } = this.props
     const className = this.getUserClassName()
-    return (
+    return user ? (
       <div className={className}>
         <div className='user'>
           <span>{user.name.match(/\b\w/g).join('')}</span>
@@ -26,7 +26,7 @@ export default class User extends React.Component {
           <p>@{user.name.split(' ')[0]}</p>
         </div>
       </div>
-    )
+    ) : null
   }
 }
 

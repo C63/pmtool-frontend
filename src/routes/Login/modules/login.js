@@ -24,7 +24,8 @@ export function loginSuccess (data) {
   return {
     type    : LOGIN_SUCCESS,
     payload : {
-      isFetching: false
+      isFetching: false,
+      isAuthenticated: true
     }
   }
 }
@@ -42,10 +43,7 @@ export function loginError (data) {
 
 export function getProfile () {
   return {
-    type: GET_PROFILE,
-    payload: {
-      isAuthenticated: true
-    }
+    type: GET_PROFILE
   }
 }
 
@@ -74,14 +72,11 @@ export default function loginReducer (state = initialState, action) {
       })
     case LOGIN_SUCCESS:
       return Object.assign({}, state, {
-        loginStatus : true,
         isFetching: action.payload.isFetching,
-        errorLoginMessage: ''
-      })
-    case GET_PROFILE:
-      return Object.assign({}, state, {
         isAuthenticated: action.payload.isAuthenticated
       })
+    case GET_PROFILE:
+      return state
     default:
       return state
   }

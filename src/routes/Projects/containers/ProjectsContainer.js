@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { getUserTeam, getTeamProject } from '../../../store/api'
+import { getUserTeam, getTeamProject, getUserProfile } from '../../../store/api'
 
 import Projects from '../components/Projects'
 
@@ -10,7 +10,8 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   fetchUserTeam: () => (dispatch(getUserTeam())),
-  fetchTeamProject: () => (dispatch(getTeamProject()))
+  fetchTeamProject: () => (dispatch(getTeamProject())),
+  fetchUserProfile: () => (dispatch(getUserProfile()))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Projects)

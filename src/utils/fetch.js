@@ -1,4 +1,4 @@
-const token = sessionStorage.getItem('userToken')
+const token = localStorage.getItem('userToken')
 
 export const fetchPost = (data) => {
   return {

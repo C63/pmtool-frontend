@@ -24,7 +24,7 @@ class NewCardModal extends React.Component {
   }
   render () {
     const { isOpen, closeModal } = this.props
-    const user = JSON.parse(sessionStorage.getItem('userInfo'))
+    const user = JSON.parse(localStorage.getItem('userInfo'))
     let users = new Array(user)
     return (
       <CoreModal isOpen={isOpen} closeModal={closeModal}>

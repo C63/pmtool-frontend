@@ -16,15 +16,19 @@ export function requireAuthentication (Component) {
     }
 
     checkAuth () {
-      if (this.props.isFetching || !this.props.token) {
+      const token = localStorage.getItem('userToken')
+
+      if (this.props.isFetching || !token) {
         browserHistory.push(`/`)
       }
     }
 
     render () {
+      const token = localStorage.getItem('userToken')
+
       return (
         <div className='auth-container'>
-          {!this.props.isFetching && this.props.token
+          {!this.props.isFetching && token
               ? <Component {...this.props} />
               : null
           }
@@ -41,13 +45,7 @@ export function requireAuthentication (Component) {
 
   AuthenticatedComponent.propTypes = {
     isFetching : React.PropTypes.bool,
-    location: React.PropTypes.object,
-    dispatch: React.PropTypes.func,
-    token: React.PropTypes.string
-  }
-
-  AuthenticatedComponent.defaultProps = {
-    token : sessionStorage.getItem('userToken')
+    location: React.PropTypes.object
   }
 
   return connect(mapStateToProps)(AuthenticatedComponent)

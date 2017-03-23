@@ -12,7 +12,8 @@ class Projects extends React.Component {
     }
   }
   componentWillMount () {
-    const { fetchUserTeam, fetchTeamProject } = this.props
+    const { fetchUserTeam, fetchTeamProject, fetchUserProfile } = this.props
+    fetchUserProfile()
     fetchUserTeam()
     fetchTeamProject()
   }
@@ -38,6 +39,7 @@ Projects.propTypes = {
   user: React.PropTypes.object,
   fetchUserTeam: React.PropTypes.func,
   fetchTeamProject: React.PropTypes.func,
+  fetchUserProfile: React.PropTypes.func,
   addTeam: React.PropTypes.func,
   teams: React.PropTypes.oneOfType([
     React.PropTypes.array,

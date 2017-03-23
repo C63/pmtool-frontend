@@ -10,6 +10,7 @@ import CommentList from '../../Comment/CommentList/CommentList'
 export default class CardModal extends React.Component {
   render () {
     const { isOpen, card, closeModal } = this.props
+    console.log(card.toJS())
     return (
       <CoreModal isOpen={isOpen} closeModal={closeModal} >
         <div className='card-modal'>
@@ -28,7 +29,7 @@ export default class CardModal extends React.Component {
             </div>
             <div className='card-modal__header'>
               <span className='card-modal__header__title'>
-                {card.get('description')}
+                {card.get('name')}
                 <p className='card-modal__header__status'>
                   Started
                 </p>
@@ -37,11 +38,7 @@ export default class CardModal extends React.Component {
             <UserList className='card-modal__userlist' />
             <div className='card-modal__task-description'>
               <h3>Task Description</h3>
-              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                Excepturi consectetur ab voluptatum officiis architecto,
-                officia dignissimos qui ipsa molestiae eligendi iusto facilis mollitia incidunt
-                , eaque vero nemo eveniet autem nobis.
-              </p>
+              <p>{card.get('task-description')}</p>
             </div>
             <div className='card-modal__activity'>
               <h3>Activity</h3>

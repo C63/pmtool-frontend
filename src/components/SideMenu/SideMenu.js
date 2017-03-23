@@ -4,9 +4,9 @@ import { Link, browserHistory } from 'react-router'
 import { Button } from 'react-bootstrap'
 
 const SideMenu = () => {
-  const user = JSON.parse(sessionStorage.getItem('userInfo'))
+  const user = JSON.parse(localStorage.getItem('userInfo'))
   const logOut = () => {
-    sessionStorage.clear()
+    localStorage.clear()
     browserHistory.push('/')
   }
 
