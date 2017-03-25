@@ -15,18 +15,18 @@ class CommentBox extends React.Component {
   onAddComment (e) {
     e.preventDefault()
     this.props.addComment({
-      'desc' : findDOMNode(this.refs.comment_desc).value
+      'content' : findDOMNode(this.refs.comment_desc).value,
+      'taskId' : this.props.taskId
     })
   }
   render () {
-    const user = JSON.parse(localStorage.getItem('userInfo'))
     const { className } = this.props
     return (
       <form className={className} onSubmit={this.onAddComment}>
         <FormGroup>
           <FormControl placeholder='Comment' ref='comment_desc' />
           <div className={className + '__bottom'}>
-            <UserItem user={user} displayDirection='horizontal' />
+            <UserItem user={this.props.user} displayDirection='horizontal' />
             <div className={className + '__bottom__buttons'}>
               <Button type='submit'>Add</Button>
               <Button>Cancel</Button>
@@ -41,9 +41,13 @@ class CommentBox extends React.Component {
 CommentBox.propTypes = {
   user : React.PropTypes.object,
   className: React.PropTypes.string,
-  addComment: React.PropTypes.func
+  addComment: React.PropTypes.func,
+  taskId: React.PropTypes.string
 }
 
+CommentBox.defaultProps = {
+  user : JSON.parse(localStorage.getItem('userInfo'))
+}
 const mapStatetoProps = () => ({})
 const mapDispatchtoProps = (dispatch) => ({
   addComment: (params) => dispatch(addComment(params))

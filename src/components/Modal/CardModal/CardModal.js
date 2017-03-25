@@ -1,5 +1,9 @@
 import React from 'react'
 import { Modal } from 'react-bootstrap'
+import { connect } from 'react-redux'
+import Immutable from 'immutable'
+
+import { getComments } from '../../../store/api'
 import CoreModal from '../CoreModal'
 import UserList from '../../User/UserList/UserList'
 import DateBox from '../../Common/DateBox/DateBox'
@@ -7,10 +11,14 @@ import MessageBox from '../../Common/MessageBox/MessageBox'
 import CommentBox from '../../Common/CommentBox/CommentBox'
 import CommentList from '../../Comment/CommentList/CommentList'
 
-export default class CardModal extends React.Component {
+class CardModal extends React.Component {
+
+  componentWillMount () {
+    this.props.fetchComments(this.props.card.get('task-id'))
+  }
   render () {
-    const { isOpen, card, closeModal } = this.props
-    console.log(card.toJS())
+    const { isOpen, card, closeModal, comments } = this.props
+
     return (
       <CoreModal isOpen={isOpen} closeModal={closeModal} >
         <div className='card-modal'>
@@ -42,9 +50,9 @@ export default class CardModal extends React.Component {
             </div>
             <div className='card-modal__activity'>
               <h3>Activity</h3>
-              <CommentBox className={'card-modal__activity__comment-box'} />
+              <CommentBox className={'card-modal__activity__comment-box'} taskId={card.get('task-id')} />
             </div>
-            <CommentList comments={card.get('comments')} className='card-modal__comments' />
+            <CommentList comments={comments} className='card-modal__comments' />
           </Modal.Body>
         </div>
       </CoreModal>
@@ -55,5 +63,22 @@ export default class CardModal extends React.Component {
 CardModal.propTypes = {
   isOpen : React.PropTypes.bool,
   closeModal : React.PropTypes.func,
-  card: React.PropTypes.object
+  card: React.PropTypes.object,
+  fetchComments: React.PropTypes.func,
+  comments: React.PropTypes.instanceOf(Immutable.List)
 }
+
+CardModal.defaultProps = {
+  card : Immutable.List()
+}
+
+const mapStatetoProps = (state) => {
+  return {
+    comments: state.project.get('comments')
+  }
+}
+const mapDispatchtoProps = (dispatch) => ({
+  fetchComments : (taskId) => dispatch(getComments(taskId))
+})
+
+export default connect(mapStatetoProps, mapDispatchtoProps)(CardModal)

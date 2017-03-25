@@ -3,6 +3,7 @@ import { loginRequest, loginError, loginSuccess, getProfile } from '../routes/Lo
 import { signUpSuccess, signUpError, signUpRequest } from '../routes/SignUp/modules/signup'
 import { addTaskRequest, addTaskSuccess, addTaskError,
          addListIdRequest, addListIdSuccess, addListIdError,
+         getComments as fetchComments, addCommentRequest, addCommentSuccess, addCommentError,
          getTaskListId as fetchTaskListId } from '../routes/ProjectDetail/modules'
 import { getTeams, createTeamRequest, createTeamSuccess, createTeamError,
          getProjects, createProjectRequest, createProjectSuccess,
@@ -174,5 +175,42 @@ export function addListId (params) {
     .catch(error => {
       return dispatch(addListIdError(error))
     })
+  }
+}
+
+/**
+ * Get comments
+ * @params taskId
+ */
+
+export function getComments (taskId) {
+  return (dispatch) => {
+    fetch(DEV_URL + `tasks/${taskId}/comments`, authGet())
+    .then(
+     response => response.json().then(data => {
+       return dispatch(fetchComments(data))
+     })
+    )
+  }
+}
+
+/**
+ * Add comment
+ * @params taskId
+ */
+
+export function addComment ({ taskId, content }) {
+  return (dispatch) => {
+    dispatch(addCommentRequest())
+    fetch(DEV_URL + `tasks/${taskId}/comments`, authPost({ content: content }))
+    .then(response => {
+      if (response.status === 200) {
+        return response.json().then(lists => {
+          return dispatch(addCommentSuccess(lists))
+        })
+      }
+    },
+    error => error.json().then(err => dispatch(addCommentError(err)))
+    )
   }
 }

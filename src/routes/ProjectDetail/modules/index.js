@@ -119,7 +119,7 @@ export function addCommentSuccess (data) {
 
 export function getComments (comments) {
   return {
-    type    : ADD_COMMENT_SUCCESS,
+    type    : GET_COMMENT,
     payload : {
       comments : comments
     }
@@ -131,7 +131,8 @@ export function getComments (comments) {
 const initialState = Immutable.Map(
   {
     addTaskStatus: null,
-    taskIds: Immutable.List()
+    taskIds: Immutable.List(),
+    comments: Immutable.List()
   }
 )
 export default function addTaskReducer (state = initialState, action) {
