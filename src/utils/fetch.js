@@ -1,4 +1,3 @@
-const token = localStorage.getItem('userToken')
 
 export const fetchPost = (data) => {
   return {
@@ -12,6 +11,8 @@ export const fetchPost = (data) => {
 }
 
 export const authGet = () => {
+  const token = localStorage.getItem('userToken')
+
   return {
     headers: {
       'Authorization' : 'Token ' + token
@@ -20,6 +21,8 @@ export const authGet = () => {
 }
 
 export const authPost = (data) => {
+  const token = localStorage.getItem('userToken')
+
   return {
     method: 'POST',
     headers: {
