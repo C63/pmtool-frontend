@@ -1,41 +1,82 @@
+
 // ------------------------------------
 // Constants
 // ------------------------------------
-export const LOGIN = 'LOGIN'
-
+export const LOGIN_REQUEST = 'LOGIN_REQUEST'
+export const LOGIN_ERROR = 'LOGIN_ERROR'
+export const LOGIN_SUCCESS = 'LOGIN_SUCCESS'
+export const GET_PROFILE = 'GET_PROFILE'
 // ------------------------------------
 // Actions
 // ------------------------------------
-export function login (data) {
+
+export function loginRequest () {
   return {
-    type    : LOGIN,
+    type    : LOGIN_REQUEST,
     payload : {
-      data
+      isFetching: true,
+      isAuthenticated: false
     }
   }
 }
-export function doLogin () {
-  return (dispatch) => {
-    fetch('http://localhost:3000/api/v1/test')
-      .then(response => { dispatch(login(response)) })
-      .then(data => { dispatch(login(data)) })
-      .catch(error => { dispatch(login(error)) })
+
+export function loginSuccess (data) {
+  return {
+    type    : LOGIN_SUCCESS,
+    payload : {
+      isFetching: false,
+      isAuthenticated: true
+    }
   }
 }
-export const actions = {
-  login
+
+export function loginError (data) {
+  return {
+    type    : LOGIN_ERROR,
+    payload : {
+      message : data,
+      isFetching: false,
+      isAuthenticated: false
+    }
+  }
+}
+
+export function getProfile () {
+  return {
+    type: GET_PROFILE
+  }
 }
 
 // ------------------------------------
 // Reducer
 // ------------------------------------
 const initialState = {
-  loginStatus: ''
+  loginStatus: null,
+  isAuthenticated : !!localStorage.getItem('userToken'),
+  errorLoginMessage: '',
+  isFetching: false
 }
 export default function loginReducer (state = initialState, action) {
   switch (action.type) {
-    case LOGIN:
-      return Object.assign({}, state, { loginStatus : action.payload.data })
+    case LOGIN_REQUEST:
+      return Object.assign({}, state, {
+        isFetching: action.payload.isFetching,
+        isAuthenticated: action.payload.isAuthenticated
+      })
+    case LOGIN_ERROR:
+      return Object.assign({}, state, {
+        loginStatus : false,
+        isFetching: action.payload.isFetching,
+        isAuthenticated: action.payload.isAuthenticated,
+        errorLoginMessage: action.payload.message
+      })
+    case LOGIN_SUCCESS:
+      return Object.assign({}, state, {
+        isFetching: action.payload.isFetching,
+        isAuthenticated: action.payload.isAuthenticated
+      })
+    case GET_PROFILE:
+      return state
     default:
       return state
   }

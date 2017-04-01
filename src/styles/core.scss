@@ -12,8 +12,13 @@
 @import "./component/Modal/CardModal/CardModal";
 @import "./component/Modal/NewCardModal/NewCardModal";
 @import "./component/Popover/AddMemberPopover/AddMemberPopover";
-@import "./routes/Home/Home";
+@import "./component/Project/ProjectList";
+@import "./component/Project/ProjectTeamList";
+@import "./routes/ProjectDetail/ProjectDetail";
 @import "./routes/Login/Login";
+@import "./routes/SignUp/SignUp";
+@import "./routes/Projects/Projects";
+@import "./routes/Team/Team";
 @import "font";
 // Some best-practice CSS that's useful for most apps
 // Just remove them if they're not what you want

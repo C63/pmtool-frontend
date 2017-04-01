@@ -1,0 +1,17 @@
+.team{
+  &__projects{
+    &__project{
+      min-height: 15vh;
+      padding: $base-margin;
+      border-radius: 4px;
+      background: $topmenu-bg;
+      margin-bottom: 30px;
+      cursor: pointer;
+      span{
+        font-size: $normal-font-size;
+        font-weight: $heavy-font-weight;
+        color: darken($topmenu-text, 6);
+      }
+    }
+  }
+}

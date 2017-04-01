@@ -1,7 +1,6 @@
 import React from 'react'
 import { Modal } from 'react-bootstrap'
-export default class CoreModal extends React.Component
-{
+export default class CoreModal extends React.Component {
   render () {
     const { isOpen, closeModal, children } = this.props
     return (

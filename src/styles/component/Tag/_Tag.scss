@@ -3,4 +3,12 @@
   color: $card-text;
   font-weight: 700;
   margin: 0 5px;
+  padding: 5px;
+  &:hover{
+    background: $topmenu-text;
+    border-radius: 5px;
+    span{
+      color: white;
+    }
+  }
 }

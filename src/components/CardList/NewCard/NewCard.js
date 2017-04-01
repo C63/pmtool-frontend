@@ -1,7 +1,6 @@
 import React from 'react'
 
-export default class NewCard extends React.Component
-{
+export default class NewCard extends React.Component {
   render () {
     return (
       <div className='new-card'>

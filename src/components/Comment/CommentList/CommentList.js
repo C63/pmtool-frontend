@@ -1,16 +1,18 @@
 import React from 'react'
+import Immutable from 'immutable'
+
 import CommentItem from '../CommentItem/CommentItem'
 
-export const CommentList = ({ comments, className }) => (
+export const CommentList = ({ comments, className }) => comments ? (
   <div className={className}>
-    { comments.slice(0, 5).map((comment) => {
-      return <CommentItem comment={comment} key={comment.id} className='comment' />
+    { comments.map((comment, index) => {
+      return <CommentItem comment={comment} key={index} className='comment' />
     }) }
   </div>
-)
+) : null
 
 CommentList.propTypes = {
-  comments : React.PropTypes.array,
+  comments : React.PropTypes.instanceOf(Immutable.List),
   className: React.PropTypes.string
 }
 

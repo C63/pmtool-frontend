@@ -1,7 +1,6 @@
 import React from 'react'
 import { OverlayTrigger } from 'react-bootstrap'
-export default class CorePopover extends React.Component
-{
+export default class CorePopover extends React.Component {
   render () {
     const { trigger, overlay, children, placement } = this.props
     return (

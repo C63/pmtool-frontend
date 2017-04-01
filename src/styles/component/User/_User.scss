@@ -9,6 +9,7 @@
   border-radius: 3px;
   width: $user-box-size;
   height: $user-box-size;
+  text-transform: uppercase;
   &-detail{
     p{
       &:last-child {
@@ -33,6 +34,7 @@
       &:first-child{
         font-size: 0.9*$small-font-size;
         font-weight: 700;
+        text-transform: capitalize;
       }
       &:last-child{
         font-size: $card-modal-status-font-size;

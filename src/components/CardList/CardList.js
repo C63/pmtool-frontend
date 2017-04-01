@@ -1,8 +1,9 @@
 import React from 'react'
 import Card from './Card/Card'
 import NewCardModal from '../Modal/NewCardModal/NewCardModal'
-export default class CardList extends React.Component
-{
+import { Scrollbars } from 'react-custom-scrollbars'
+
+export default class CardList extends React.Component {
   constructor () {
     super()
     this.state = {
@@ -16,34 +17,47 @@ export default class CardList extends React.Component
       isOpen: !isOpen
     })
   }
-  renderCardModal () {
-    const { isOpen } = this.state
-    const { list } = this.props
-
-    if (isOpen) {
-      return <NewCardModal isOpen={isOpen} closeModal={this.toggleModal} cards={list.cards} />
-    }
-    return
-  }
   render () {
-    const { list } = this.props
-    const NewCardModal = this.renderCardModal()
+    const { list, listMode } = this.props
+    const { isOpen } = this.state
+    const listSize = list.get('tasks')
     return (
       <div className='card-list'>
         <div className='card-list__header'>
-          <span className='card-list__header__name'>{list.list_name}</span>
-          <span className='card-list__header__counter'>{list.cards.length}</span>
+          <span className='card-list__header__name'>{list.get('name')}</span>
+          { listSize ? <span className='card-list__header__counter'>{listSize.size}</span> : null}
           <span className='card-list__header__right'>
             <span className='plus' onClick={this.toggleModal}>+</span>
             <span className='dots'>...</span>
           </span>
-          {NewCardModal}
+          { isOpen &&
+            <NewCardModal
+              isOpen={isOpen}
+              closeModal={this.toggleModal}
+              taskListId={list.get('task-list-id')} />
+          }
         </div>
-        { list.cards.map((card) => {
-          return (
-            <Card key={card.id} card={card} />
-          )
-        })}
+        { listMode === 'vertical' && listSize &&
+          <Scrollbars autoHide >
+            { list.get('tasks').map((card, index) => {
+              return (
+                <Card key={index} card={card} listMode={listMode} />
+              )
+            })}
+          </Scrollbars>
+        }
+
+        { listMode === 'horizontal' && listSize &&
+          list.get('tasks').map((card, index) => {
+            return (
+              <Card key={index} card={card} listMode={listMode} />
+            )
+          })
+        }
+
+        { !listSize &&
+          <div className='no_task'>No task</div>
+        }
       </div>
     )
   }
@@ -51,5 +65,6 @@ export default class CardList extends React.Component
 
 CardList.propTypes = {
   list: React.PropTypes.object,
-  toggleModal: React.PropTypes.func
+  toggleModal: React.PropTypes.func,
+  listMode: React.PropTypes.string
 }

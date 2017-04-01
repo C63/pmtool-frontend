@@ -1,0 +1,12 @@
+.project-teams{
+  overflow: scroll;
+  flex: 1;
+  margin: 0 30px;
+  .team{
+    &__name{
+      font-size: $large-font-size;
+      font-weight: $heavy-font-weight;
+      color: $card-text;
+    }
+  }
+}

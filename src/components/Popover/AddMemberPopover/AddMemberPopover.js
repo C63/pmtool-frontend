@@ -2,17 +2,19 @@ import React from 'react'
 import { Popover, Button } from 'react-bootstrap'
 import CorePopover from '../CorePopover'
 import UserItem from '../../User/UserItem/UserItem'
-export default class AddMemberPopover extends React.Component
-{
+export default class AddMemberPopover extends React.Component {
   renderPopOver () {
     const { users } = this.props
     return (
       <Popover id='add-member-popover' className='add-member-popover'>
         <h4>Members</h4>
         <input type='text' placeholder='Search members or teams' />
-        { users.map((user, index) => {
+        { users && users.map((user, index) => {
           return <UserItem user={user} key={index} displayDirection='horizontal' />
         }) }
+        { !users &&
+          <div className='no-user'>No user</div>
+        }
       </Popover>
     )
   }

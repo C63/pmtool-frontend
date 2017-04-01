@@ -1,25 +1,54 @@
 import React from 'react'
+import { findDOMNode } from 'react-dom'
 import { FormControl, FormGroup, Button } from 'react-bootstrap'
-import { Link } from 'react-router'
-
-export default class Login extends React.Component
-{
+import { Link, browserHistory } from 'react-router'
+import classNames from 'classnames'
+export default class Login extends React.Component {
   constructor () {
     super()
     this.login = this.login.bind(this)
   }
 
+  shouldComponentUpdate (nextProps) {
+    if (nextProps.loginStatus) {
+      return false
+    }
+    return true
+  }
+
+  componentWillReceiveProps (nextProps) {
+    if (nextProps.isAuthenticated) {
+      if (this.props.location.pathname === '/') {
+        browserHistory.push('/projects')
+      } else {
+        browserHistory.goBack()
+      }
+    }
+  }
+
   login (e) {
+    const { doLogin } = this.props
     e.preventDefault()
-    this.props.doLogin('wa', 'vkl')
+    doLogin({
+      'email' : findDOMNode(this.refs.email).value,
+      'password': findDOMNode(this.refs.password).value
+    })
   }
 
   render () {
+    const { loginStatus, errorLoginMessage } = this.props
+    const statusClassName = classNames(
+      'login__status',
+      {
+        'login__status__fail' : loginStatus !== null && loginStatus === false,
+        'login__status__success': loginStatus === true
+      })
     return (
       <div className='login'>
         <div className='login__modal'>
           <h4>Welcome, my friend</h4>
           <form onSubmit={this.login} className='login__form'>
+            <p className={statusClassName}>{errorLoginMessage}</p>
             <FormGroup>
               <FormControl
                 id='formControlsEmail'
@@ -53,5 +82,10 @@ export default class Login extends React.Component
 }
 
 Login.propTypes = {
-  doLogin : React.PropTypes.func.isRequired
+  doLogin : React.PropTypes.func.isRequired,
+  loginStatus: React.PropTypes.bool,
+  dispatch: React.PropTypes.func,
+  errorLoginMessage: React.PropTypes.string,
+  location: React.PropTypes.object,
+  isAuthenticated: React.PropTypes.bool
 }

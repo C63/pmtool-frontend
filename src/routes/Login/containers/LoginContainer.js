@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { doLogin } from '../modules/login'
+import { doLogin } from '../../../store/api'
 
 /*  This is a container component. Notice it does not contain any JSX,
     nor does it import React. This component is **only** responsible for
@@ -12,12 +12,15 @@ import Login from '../components/Login'
     Keys will be passed as props to presentational components. Here we are
     implementing our wrapper around increment; the component doesn't care   */
 
-const mapDispatchToProps = {
-  doLogin
-}
+const mapDispatchToProps = (dispatch) => ({
+  doLogin: (data) => (dispatch(doLogin(data)))
+})
 
 const mapStateToProps = (state) => ({
-  loginStatus : state.loginStatus
+  loginStatus : state.login.loginStatus,
+  errorLoginMessage : state.login.errorLoginMessage,
+  isAuthenticated: state.login.isAuthenticated,
+  isFetching: state.login.isFetching
 })
 
 /*  Note: mapStateToProps is where you should use `reselect` to create selectors, ie:

@@ -2,11 +2,10 @@ import React from 'react'
 import UserItem from '../UserItem/UserItem'
 import AddMemberPopover from '../../Popover/AddMemberPopover/AddMemberPopover'
 
-export default class UserList extends React.Component
-{
+export default class UserList extends React.Component {
   render () {
     const { users, className } = this.props
-    return (
+    return users ? (
       <div className={className}>
         { users.map((user, index) => {
           return (
@@ -15,7 +14,7 @@ export default class UserList extends React.Component
         })}
         <AddMemberPopover users={users} />
       </div>
-    )
+    ) : null
   }
 }
 
