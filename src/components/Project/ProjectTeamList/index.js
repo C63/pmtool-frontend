@@ -40,7 +40,7 @@ class ProjectTeamList extends React.Component {
       <div className='project-teams'>
         <div className='team'>
           <div className='team__header'>
-            <span className='team__name' />
+            <span className='team__name'>Personal Projects</span>
             <Button onClick={() => this.toggleProjectModal()}>+</Button>
           </div>
           <ProjectList projects={noTeamProjects} />

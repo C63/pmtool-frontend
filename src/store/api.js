@@ -71,6 +71,10 @@ export function getUserProfile () {
         return dispatch(getProfile())
       })
     )
+    .catch(err => {
+      localStorage.clear()
+      return dispatch(loginError(err))
+    })
   }
 }
 
