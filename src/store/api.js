@@ -132,6 +132,7 @@ export function createTeamProject (params) {
       return dispatch(createProjectError(response))
     })
     .catch(error => {
+      debugger
       return dispatch(createProjectError(error))
     })
   }

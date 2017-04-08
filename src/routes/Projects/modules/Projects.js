@@ -53,7 +53,7 @@ export function createTeamSuccess (data) {
     payload: {
       createTeamStatus: true,
       isFetching: false,
-      teams: [data]
+      teams: data
     }
   }
 }
@@ -120,7 +120,11 @@ function fetchTeamProjectReducer (state = initialState, action) {
       return state.merge(action.payload)
     }
     case CREATE_TEAM_SUCCESS: {
-      return state.mergeDeep(action.payload)
+      return state.merge({
+        createTeamStatus: action.payload.createTeamStatus,
+        isFetching: action.payload.isFetching,
+        teams: state.get('teams').update(teams => teams.push(fromJS(action.payload.teams)))
+      })
     }
     case CREATE_TEAM_ERROR: {
       return state.merge(action.payload)
@@ -132,11 +136,19 @@ function fetchTeamProjectReducer (state = initialState, action) {
       if (get(action.payload.project, 'team-id')) {
         return state.update('teams', teams => teams.map(team => {
           if (team.get('team-id') === get(action.payload.project, 'team-id')) {
-            return team.update('projects', arr => arr.push(fromJS(action.payload.project)))
+            if (team.get('projects')) {
+              return team.update('projects', arr => arr.push(fromJS(action.payload.project)))
+            }
+            return team.set('projects', Immutable.List().push(fromJS(action.payload.project)))
           }
           return team
         }))
-      } else return state.update('projects', arr => arr.push(fromJS(action.payload.project)))
+      } else {
+        if (state.get('projects')) {
+          return state.update('projects', arr => arr.push(fromJS(action.payload.project)))
+        }
+        return state.merge({ projects : Immutable.List().push(fromJS(action.payload.project)) })
+      }
     }
     case CREATE_PROJECT_ERROR: {
       return state.merge(action.payload)
