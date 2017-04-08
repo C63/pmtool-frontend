@@ -1,9 +1,14 @@
 import React from 'react'
 import UserItem from '../../User/UserItem/UserItem'
 import moment from 'moment'
+import Immutable from 'immutable'
 
 const CommentItem = ({ comment, className }) => {
-  const user = JSON.parse(localStorage.getItem('userInfo'))
+  let user = Immutable.Map({
+    'account-id' : comment.get('account-id'),
+    'name' : comment.get('name'),
+    'email': comment.get('email')
+  })
 
   return (
     <div className={className}>

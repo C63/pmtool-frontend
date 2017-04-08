@@ -5,12 +5,12 @@ export default class Tag extends React.Component {
     const { tag } = this.props
     return (
       <div className='tag'>
-        <span>{tag.tag_content}</span>
+        <span>{tag}</span>
       </div>
     )
   }
 }
 Tag.propTypes = {
-  tag: React.PropTypes.object,
+  tag: React.PropTypes.string,
   isLastTag: React.PropTypes.bool
 }

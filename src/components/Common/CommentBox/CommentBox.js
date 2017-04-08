@@ -1,4 +1,5 @@
 import React from 'react'
+import Immutable from 'immutable'
 import { Button, FormControl, FormGroup } from 'react-bootstrap'
 import { connect } from 'react-redux'
 import { findDOMNode } from 'react-dom'
@@ -21,12 +22,14 @@ class CommentBox extends React.Component {
   }
   render () {
     const { className } = this.props
+    const user = Immutable.fromJS(JSON.parse(localStorage.getItem('userInfo')))
+
     return (
       <form className={className} onSubmit={this.onAddComment}>
         <FormGroup>
           <FormControl placeholder='Comment' ref='comment_desc' />
           <div className={className + '__bottom'}>
-            <UserItem user={this.props.user} displayDirection='horizontal' />
+            <UserItem user={user} displayDirection='horizontal' />
             <div className={className + '__bottom__buttons'}>
               <Button type='submit'>Add</Button>
               <Button>Cancel</Button>
@@ -39,15 +42,12 @@ class CommentBox extends React.Component {
 }
 
 CommentBox.propTypes = {
-  user : React.PropTypes.object,
+  user : React.PropTypes.instanceOf(Immutable.Map),
   className: React.PropTypes.string,
   addComment: React.PropTypes.func,
   taskId: React.PropTypes.string
 }
 
-CommentBox.defaultProps = {
-  user : JSON.parse(localStorage.getItem('userInfo'))
-}
 const mapStatetoProps = () => ({})
 const mapDispatchtoProps = (dispatch) => ({
   addComment: (params) => dispatch(addComment(params))

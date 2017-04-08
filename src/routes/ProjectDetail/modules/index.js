@@ -19,6 +19,10 @@ export const ADD_COMMENT_REQUEST = 'ADD_COMMENT_REQUEST'
 export const ADD_COMMENT_ERROR = 'ADD_COMMENT_ERROR'
 export const ADD_COMMENT_SUCCESS = 'ADD_COMMENT_SUCCESS'
 
+export const ADD_ACCOUNT_REQUEST = 'ADD_ACCOUNT_REQUEST'
+export const ADD_ACCOUNT_ERROR = 'ADD_ACCOUNT_ERROR'
+export const ADD_ACCOUNT_SUCCESS = 'ADD_ACCOUNT_SUCCESS'
+
 // ------------------------------------
 // Actions
 // ------------------------------------
@@ -34,6 +38,11 @@ export function addTaskRequest (data) {
 }
 
 export function addTaskSuccess (data) {
+  if (!data.accounts) {
+    const user = JSON.parse(localStorage.getItem('userInfo'))
+    data.accounts = [user]
+  }
+
   return {
     type    : ADD_TASK_SUCCESS,
     payload : {
@@ -117,6 +126,34 @@ export function addCommentSuccess (data) {
   }
 }
 
+export function addAccountRequest () {
+  return {
+    type    : ADD_ACCOUNT_REQUEST,
+    payload : {
+      isFetching: true
+    }
+  }
+}
+
+export function addAccountError () {
+  return {
+    type    : ADD_ACCOUNT_ERROR,
+    payload : {
+      isFetching: false
+    }
+  }
+}
+
+export function addAccountSuccess (data) {
+  return {
+    type    : ADD_ACCOUNT_SUCCESS,
+    payload : {
+      account : data,
+      isFetching: false
+    }
+  }
+}
+
 export function getComments (comments) {
   return {
     type    : GET_COMMENT,
@@ -167,6 +204,12 @@ export default function addTaskReducer (state = initialState, action) {
     case ADD_COMMENT_ERROR:
       return state.merge(action.payload)
     case GET_COMMENT:
+      return state.merge(action.payload)
+    case ADD_ACCOUNT_REQUEST:
+      return state.merge(action.payload)
+    case ADD_ACCOUNT_SUCCESS:
+      return state.update('accounts', arr => arr.push(fromJS(action.payload.comment)))
+    case ADD_ACCOUNT_ERROR:
       return state.merge(action.payload)
     default:
       return state

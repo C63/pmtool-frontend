@@ -1,4 +1,5 @@
 import React from 'react'
+import Immutable from 'immutable'
 import { Popover, Button } from 'react-bootstrap'
 import CorePopover from '../CorePopover'
 import UserItem from '../../User/UserItem/UserItem'
@@ -29,5 +30,5 @@ export default class AddMemberPopover extends React.Component {
 }
 
 AddMemberPopover.propTypes = {
-  users: React.PropTypes.array
+  users: React.PropTypes.instanceOf(Immutable.List)
 }

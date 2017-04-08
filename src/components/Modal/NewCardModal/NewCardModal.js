@@ -1,4 +1,5 @@
 import React from 'react'
+import Immutable from 'immutable'
 import { Modal, Button, FormControl, FormGroup } from 'react-bootstrap'
 import { findDOMNode } from 'react-dom'
 import { connect } from 'react-redux'
@@ -24,8 +25,8 @@ class NewCardModal extends React.Component {
   }
   render () {
     const { isOpen, closeModal } = this.props
-    const user = JSON.parse(localStorage.getItem('userInfo'))
-    let users = new Array(user)
+    const users = Immutable.List().push(Immutable.fromJS(JSON.parse(localStorage.getItem('userInfo'))))
+
     return (
       <CoreModal isOpen={isOpen} closeModal={closeModal}>
         <form className='new-card-modal' onSubmit={this.onAddTask}>

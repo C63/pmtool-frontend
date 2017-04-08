@@ -1,6 +1,5 @@
 .list-container{
   display: flex;
-  justify-content: space-between;
   flex: 1;
   &__horizontal{
     flex-direction: column;
@@ -24,6 +23,7 @@
 
     .card-list {
       margin-right: 20px;
+      margin-bottom: 40px;
       .no_task {
         padding: $base-margin 0;
       }

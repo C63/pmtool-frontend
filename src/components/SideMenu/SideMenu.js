@@ -2,9 +2,10 @@ import React from 'react'
 import UserItem from '../User/UserItem/UserItem'
 import { Link, browserHistory } from 'react-router'
 import { Button } from 'react-bootstrap'
+import Immutable from 'immutable'
 
 const SideMenu = () => {
-  const user = JSON.parse(localStorage.getItem('userInfo'))
+  const user = Immutable.fromJS(JSON.parse(localStorage.getItem('userInfo')))
   const logOut = () => {
     localStorage.clear()
     browserHistory.push('/')

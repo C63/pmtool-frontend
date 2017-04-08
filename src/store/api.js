@@ -4,6 +4,7 @@ import { signUpSuccess, signUpError, signUpRequest } from '../routes/SignUp/modu
 import { addTaskRequest, addTaskSuccess, addTaskError,
          addListIdRequest, addListIdSuccess, addListIdError,
          getComments as fetchComments, addCommentRequest, addCommentSuccess, addCommentError,
+         addAccountRequest, addAccountSuccess, addAccountError,
          getTaskListId as fetchTaskListId } from '../routes/ProjectDetail/modules'
 import { getTeams, createTeamRequest, createTeamSuccess, createTeamError,
          getProjects, createProjectRequest, createProjectSuccess,
@@ -132,7 +133,6 @@ export function createTeamProject (params) {
       return dispatch(createProjectError(response))
     })
     .catch(error => {
-      debugger
       return dispatch(createProjectError(error))
     })
   }
@@ -212,6 +212,22 @@ export function addComment ({ taskId, content }) {
       }
     },
     error => error.json().then(err => dispatch(addCommentError(err)))
+    )
+  }
+}
+
+export function addAccountToTask ({ taskId, accountId }) {
+  return (dispatch) => {
+    dispatch(addAccountRequest())
+    fetch(DEV_URL + `tasks/${taskId}/accounts`, authPost({ 'account-id': accountId }))
+    .then(response => {
+      if (response.status === 200) {
+        return response.json().then(lists => {
+          return dispatch(addAccountSuccess(lists))
+        })
+      }
+    },
+    error => error.json().then(err => dispatch(addAccountError(err)))
     )
   }
 }

@@ -1,4 +1,5 @@
 import React from 'react'
+import Immutable from 'immutable'
 import UserItem from '../UserItem/UserItem'
 import AddMemberPopover from '../../Popover/AddMemberPopover/AddMemberPopover'
 
@@ -19,6 +20,6 @@ export default class UserList extends React.Component {
 }
 
 UserList.propTypes = {
-  users: React.PropTypes.array,
+  users: React.PropTypes.instanceOf(Immutable.List),
   className: React.PropTypes.string
 }
