@@ -18,7 +18,7 @@ export default class SignUp extends React.Component {
 
   componentWillReceiveProps (nextProps) {
     if (nextProps.isAuthenticated) {
-      browserHistory.push('/project')
+      browserHistory.push('/projects')
     }
   }
 

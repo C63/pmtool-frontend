@@ -9,7 +9,7 @@ import classNames from 'classnames'
 class SideMenu extends React.Component {
 
   render () {
-    const user = Immutable.fromJS(JSON.parse(localStorage.getItem('userInfo')))
+    let user = Immutable.fromJS(JSON.parse(localStorage.getItem('userInfo')))
     const logOut = () => {
       localStorage.clear()
       browserHistory.push('/')

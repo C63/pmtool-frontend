@@ -37,7 +37,7 @@ class CardModal extends React.Component {
             </div>
             <div className='card-modal__header'>
               <span className='card-modal__header__title'>
-                {card.get('name')}
+                {card.get('name') ? card.get('name') : 'No title'}
                 <p className='card-modal__header__status'>
                   Started
                 </p>

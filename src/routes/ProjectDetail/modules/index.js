@@ -7,10 +7,13 @@ import get from 'lodash/get'
 export const GET_TASK_LIST_ID = 'GET_TASK_LIST_ID'
 export const GET_COMMENT = 'GET_COMMENT'
 export const GET_TASKS_DETAIL = 'GET_TASKS_DETAIL'
-
+export const GET_USER_FETCH_LIST = 'GET_USER_FETCH_LIST'
 export const ADD_LIST_ID_REQUEST = 'ADD_LIST_ID_REQUEST'
 export const ADD_LIST_ID_ERROR = 'ADD_LIST_ID_ERROR'
 export const ADD_LIST_ID_SUCCESS = 'ADD_LIST_ID_SUCCESS'
+
+export const SELECT_USER = 'SELECT_USER'
+export const CLEAR_USER_LIST = 'CLEAR_USER_LIST'
 
 export const ADD_TASK_REQUEST = 'ADD_TASK_REQUEST'
 export const ADD_TASK_ERROR = 'ADD_TASK_ERROR'
@@ -72,6 +75,30 @@ export function getTaskListId (data) {
     type    : GET_TASK_LIST_ID,
     payload : {
       taskIds: data
+    }
+  }
+}
+
+export function getUserFetchList (data) {
+  return {
+    type    : GET_USER_FETCH_LIST,
+    payload : {
+      users: data
+    }
+  }
+}
+
+export function clearUserList () {
+  return {
+    type    : CLEAR_USER_LIST
+  }
+}
+
+export function selectUser (data) {
+  return {
+    type    : SELECT_USER,
+    payload : {
+      usersList: data
     }
   }
 }
@@ -176,7 +203,9 @@ const initialState = Immutable.Map(
     addTaskStatus: null,
     taskIds: Immutable.List(),
     comments: Immutable.List(),
-    accounts: Immutable.List()
+    accounts: Immutable.List(),
+    users: Immutable.List(),
+    usersList: Immutable.List()
   }
 )
 export default function addTaskReducer (state = initialState, action) {
@@ -227,6 +256,18 @@ export default function addTaskReducer (state = initialState, action) {
       return state.update('accounts', arr => arr.push(fromJS(action.payload.account)))
     case ADD_ACCOUNT_ERROR:
       return state.merge(action.payload)
+    case GET_USER_FETCH_LIST:
+      return state.mergeDeep(action.payload)
+    case CLEAR_USER_LIST:
+      return state.merge({
+        usersList: Immutable.List().push(fromJS(JSON.parse(localStorage.getItem('userInfo'))))
+      })
+    case SELECT_USER:
+      if (state.get('usersList').find(user => user.get('account-id') === action.payload.usersList.get('account-id'))) {
+        return state
+      } else {
+        return state.update('usersList', arr => arr.push(action.payload.usersList))
+      }
     default:
       return state
   }
