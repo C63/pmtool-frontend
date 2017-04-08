@@ -4,11 +4,14 @@ import { signUpSuccess, signUpError, signUpRequest } from '../routes/SignUp/modu
 import { addTaskRequest, addTaskSuccess, addTaskError,
          addListIdRequest, addListIdSuccess, addListIdError,
          getComments as fetchComments, addCommentRequest, addCommentSuccess, addCommentError,
-         addAccountRequest, addAccountSuccess, addAccountError,
+         addAccountRequest, addAccountSuccess, addAccountError, getTasksDetails,
          getTaskListId as fetchTaskListId } from '../routes/ProjectDetail/modules'
 import { getTeams, createTeamRequest, createTeamSuccess, createTeamError,
          getProjects, createProjectRequest, createProjectSuccess,
          createProjectError } from '../routes/Projects/modules/Projects'
+
+import { getTeamInfo } from '../routes/Team/modules/Team'
+
 import { DEV_URL } from './constant'
 import { fetchPost, authGet, authPost } from '../utils/fetch'
 
@@ -57,7 +60,13 @@ export function addTask (params) {
     dispatch(addTaskRequest(params))
     fetch(DEV_URL + 'tasks', authPost(params))
     .then(
-      response => response.json().then(data => dispatch(addTaskSuccess(data))),
+      response => response.json().then(data => {
+        const user = JSON.parse(localStorage.getItem('userInfo'))
+        if (!data.accounts) {
+          dispatch(addAccountToTask({ 'taskId' : get(data, 'task-id'), 'accountId' : get(user, 'account-id') }))
+        }
+        return dispatch(addTaskSuccess(data))
+      }),
       error => error.json().then(err => dispatch(addTaskError(err)))
     )
   }
@@ -85,6 +94,17 @@ export function getUserTeam () {
     .then(
       response => response.json().then(data => {
         return dispatch(getTeams(data))
+      })
+    )
+  }
+}
+
+export function getTeamList () {
+  return (dispatch) => {
+    fetch(DEV_URL + 'teams', authGet())
+    .then(
+      response => response.json().then(data => {
+        return dispatch(getTeamInfo(data))
       })
     )
   }
@@ -155,6 +175,22 @@ export function getTaskListId (projectId) {
 }
 
 /**
+ * Get project task list
+ * @params projectId
+ */
+
+export function getTasksDetail (taskListId) {
+  return (dispatch) => {
+    fetch(DEV_URL + 'tasks?task-list-id=' + taskListId, authGet())
+    .then(
+     response => response.json().then(data => {
+       return dispatch(getTasksDetails(data, taskListId))
+     })
+    )
+  }
+}
+
+/**
  * Add new list id
  * @param List name
  * @param List description
@@ -206,8 +242,11 @@ export function addComment ({ taskId, content }) {
     fetch(DEV_URL + `tasks/${taskId}/comments`, authPost({ content: content }))
     .then(response => {
       if (response.status === 200) {
-        return response.json().then(lists => {
-          return dispatch(addCommentSuccess(lists))
+        return response.json().then(comment => {
+          const user = JSON.parse(localStorage.getItem('userInfo'))
+          comment.name = user.name
+          comment.email = user.email
+          return dispatch(addCommentSuccess(comment))
         })
       }
     },
@@ -221,10 +260,8 @@ export function addAccountToTask ({ taskId, accountId }) {
     dispatch(addAccountRequest())
     fetch(DEV_URL + `tasks/${taskId}/accounts`, authPost({ 'account-id': accountId }))
     .then(response => {
-      if (response.status === 200) {
-        return response.json().then(lists => {
-          return dispatch(addAccountSuccess(lists))
-        })
+      if (response.status === 204) {
+        return dispatch(addAccountSuccess(taskId))
       }
     },
     error => error.json().then(err => dispatch(addAccountError(err)))

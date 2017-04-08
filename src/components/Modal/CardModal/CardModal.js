@@ -43,7 +43,7 @@ class CardModal extends React.Component {
                 </p>
               </span>
             </div>
-            <UserList className='card-modal__userlist' />
+            <UserList users={card.get('accounts')} className='card-modal__userlist' />
             <div className='card-modal__task-description'>
               <h3>Task Description</h3>
               <p>{card.get('task-description') ? card.get('task-description') : 'No description'}</p>

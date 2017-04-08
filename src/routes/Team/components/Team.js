@@ -1,18 +1,25 @@
 import React from 'react'
+import Immutable from 'immutable'
 import TeamList from '../../../components/Team/TeamList'
 import TopMenu from '../../../components/TopMenu/TopMenu'
 import SideMenu from '../../../components/SideMenu/SideMenu'
 
 class Team extends React.Component {
+
+  componentWillMount () {
+    const { fetchUserTeam } = this.props
+    fetchUserTeam()
+  }
+
   render () {
-    const { team } = this.props
+    const { teams } = this.props
 
     return (
       <div className='main-container'>
         <SideMenu />
         <div className='projects-dashboard'>
           <TopMenu />
-          <TeamList team={team} />
+          <TeamList teams={teams} />
         </div>
       </div>
     )
@@ -23,5 +30,6 @@ class Team extends React.Component {
 export default Team
 
 Team.propTypes = {
-  team: React.PropTypes.array
+  teams: React.PropTypes.instanceOf(Immutable.List),
+  fetchUserTeam: React.PropTypes.func
 }

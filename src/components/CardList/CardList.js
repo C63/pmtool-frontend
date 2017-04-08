@@ -2,8 +2,11 @@ import React from 'react'
 import Card from './Card/Card'
 import NewCardModal from '../Modal/NewCardModal/NewCardModal'
 import { Scrollbars } from 'react-custom-scrollbars'
+import { connect } from 'react-redux'
+import Immutable from 'immutable'
+import { getTasksDetail } from '../../store/api'
 
-export default class CardList extends React.Component {
+class CardList extends React.Component {
   constructor () {
     super()
     this.state = {
@@ -11,6 +14,18 @@ export default class CardList extends React.Component {
     }
     this.toggleModal = this.toggleModal.bind(this)
   }
+  componentWillMount () {
+    const { list } = this.props
+    this.props.fetchTaskDetails(list.get('task-list-id'))
+  }
+
+  componentWillReceiveProps (nextProps) {
+    const { list } = this.props
+    if (!Immutable.is(this.props.accounts, nextProps.accounts)) {
+      this.props.fetchTaskDetails(list.get('task-list-id'))
+    }
+  }
+
   toggleModal () {
     const { isOpen } = this.state
     this.setState({
@@ -66,5 +81,16 @@ export default class CardList extends React.Component {
 CardList.propTypes = {
   list: React.PropTypes.object,
   toggleModal: React.PropTypes.func,
-  listMode: React.PropTypes.string
+  listMode: React.PropTypes.string,
+  fetchTaskDetails: React.PropTypes.func,
+  accounts: React.PropTypes.instanceOf(Immutable.List)
 }
+
+const mapStatetoProps = (state) => ({
+  accounts: state.project.get('accounts')
+})
+const mapDispatchtoProps = (dispatch) => ({
+  fetchTaskDetails: (taskListId) => (dispatch(getTasksDetail(taskListId)))
+})
+
+export default connect(mapStatetoProps, mapDispatchtoProps)(CardList)

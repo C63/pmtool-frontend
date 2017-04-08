@@ -6,6 +6,7 @@ import get from 'lodash/get'
 
 export const GET_TASK_LIST_ID = 'GET_TASK_LIST_ID'
 export const GET_COMMENT = 'GET_COMMENT'
+export const GET_TASKS_DETAIL = 'GET_TASKS_DETAIL'
 
 export const ADD_LIST_ID_REQUEST = 'ADD_LIST_ID_REQUEST'
 export const ADD_LIST_ID_ERROR = 'ADD_LIST_ID_ERROR'
@@ -38,11 +39,6 @@ export function addTaskRequest (data) {
 }
 
 export function addTaskSuccess (data) {
-  if (!data.accounts) {
-    const user = JSON.parse(localStorage.getItem('userInfo'))
-    data.accounts = [user]
-  }
-
   return {
     type    : ADD_TASK_SUCCESS,
     payload : {
@@ -57,6 +53,16 @@ export function addTaskError (data) {
     payload : {
       message : data,
       isFetching: false
+    }
+  }
+}
+
+export function getTasksDetails (data, taskListId) {
+  return {
+    type    : GET_TASKS_DETAIL,
+    payload : {
+      tasks: data,
+      taskListId: taskListId
     }
   }
 }
@@ -169,11 +175,21 @@ const initialState = Immutable.Map(
   {
     addTaskStatus: null,
     taskIds: Immutable.List(),
-    comments: Immutable.List()
+    comments: Immutable.List(),
+    accounts: Immutable.List()
   }
 )
 export default function addTaskReducer (state = initialState, action) {
   switch (action.type) {
+    case GET_TASKS_DETAIL:
+      return state.update('taskIds', taskIds => taskIds.map(taskId => {
+        if (taskId.get('task-list-id') === action.payload.taskListId) {
+          return taskId.merge({
+            tasks: fromJS(action.payload.tasks)
+          })
+        }
+        return taskId
+      }))
     case ADD_TASK_REQUEST:
       return state.merge(action.payload)
     case ADD_TASK_ERROR:
@@ -208,7 +224,7 @@ export default function addTaskReducer (state = initialState, action) {
     case ADD_ACCOUNT_REQUEST:
       return state.merge(action.payload)
     case ADD_ACCOUNT_SUCCESS:
-      return state.update('accounts', arr => arr.push(fromJS(action.payload.comment)))
+      return state.update('accounts', arr => arr.push(fromJS(action.payload.account)))
     case ADD_ACCOUNT_ERROR:
       return state.merge(action.payload)
     default:

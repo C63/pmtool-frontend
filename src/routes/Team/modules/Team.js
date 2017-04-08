@@ -1,89 +1,25 @@
-import team from './mock.json'
-// import get from 'lodash/get'
-// ------------------------------------
-// Constants
-// ------------------------------------
-// export const LOGIN_REQUEST = 'LOGIN_REQUEST'
-// export const LOGIN_ERROR = 'LOGIN_ERROR'
-// export const LOGIN_SUCCESS = 'LOGIN_SUCCESS'
-// export const LOGOUT = 'LOGOUT'
+import Immutable from 'immutable'
 
-// ------------------------------------
-// Actions
-// ------------------------------------
+export const GET_TEAMS_INFO = 'GET_TEAMS_INFO'
 
-// export function loginRequest (data) {
-//   return {
-//     type    : LOGIN_REQUEST,
-//     payload : {
-//       data : data,
-//       isFetching: true,
-//       isAuthenticated: false
-//     }
-//   }
-// }
-//
-// export function loginSuccess (data) {
-//   return {
-//     type    : LOGIN_SUCCESS,
-//     payload : {
-//       isFetching: false,
-//       isAuthenticated: true,
-//       userToken: get(data, 'access-token')
-//     }
-//   }
-// }
-//
-// export function loginError (data) {
-//   return {
-//     type    : LOGIN_ERROR,
-//     payload : {
-//       message : data,
-//       isFetching: false,
-//       isAuthenticated: false
-//     }
-//   }
-// }
-// export function logOut () {
-//   return {
-//     type: LOGOUT
-//   }
-// }
-
+export function getTeamInfo (teams) {
+  return {
+    type : GET_TEAMS_INFO,
+    payload: {
+      teams: teams
+    }
+  }
+}
 // ------------------------------------
 // Reducer
 // ------------------------------------
-const initialState = {
-  team: team
-}
+const initialState = Immutable.Map({
+  teams: Immutable.List()
+})
 export default function loginReducer (state = initialState, action) {
   switch (action.type) {
-    // case LOGIN_REQUEST:
-    //   return Object.assign({}, state, {
-    //     isFetching: action.payload.isFetching,
-    //     isAuthenticated: action.payload.isAuthenticated
-    //   })
-    // case LOGIN_ERROR:
-    //   return Object.assign({}, state, {
-    //     loginStatus : false,
-    //     isFetching: action.payload.isFetching,
-    //     isAuthenticated: action.payload.isAuthenticated,
-    //     errorLoginMessage: action.payload.message,
-    //     userToken: ''
-    //   })
-    // case LOGIN_SUCCESS:
-    //   return Object.assign({}, state, {
-    //     loginStatus : true,
-    //     isFetching: action.payload.isFetching,
-    //     isAuthenticated: action.payload.isAuthenticated,
-    //     userToken: action.payload.userToken,
-    //     errorLoginMessage: ''
-    //   })
-    // case LOGOUT:
-    //   localStorage.clear()
-    //   return Object.assign({}, state, {
-    //     initialState
-    //   })
+    case GET_TEAMS_INFO:
+      return state.merge(action.payload)
     default:
       return state
   }

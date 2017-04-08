@@ -1,28 +1,29 @@
 import React from 'react'
 import UserItem from '../../User/UserItem/UserItem'
+import Immutable from 'immutable'
 
 class TeamList extends React.Component {
 
   render () {
-    const { team } = this.props
+    const { teams } = this.props
 
     return (
       <div className='team-container'>
         <div className='team-list col-sm-8'>
-          {team.map((t, index) => {
+          {!teams.isEmpty() && teams.map((t, index) => {
             return (
-              <div className='team'>
-                <div className='team__name' key={index} >
-                  <span>{t.name}</span>
+              <div className='team' key={index}>
+                <div className='team__name' >
+                  <span>{t.get('name')}</span>
                   <button className='team__member__addmore'>+</button>
                 </div>
                 <div className='team__members'>
                   {
-                    t.members.map((mem, idx) => {
+                    t.get('accounts').map((mem, idx) => {
                       return (
-                        <div className='team__members__member'>
+                        <div className='team__members__member' key={idx}>
                           <UserItem user={mem} displayDirection='horizontal' />
-                          <span className='team__members__member__role'>{mem.role}</span>
+                          <span className='team__members__member__role'>Members</span>
                         </div>
                       )
                     })
@@ -31,6 +32,9 @@ class TeamList extends React.Component {
               </div>
             )
           })}
+          { teams.isEmpty() &&
+            <div className='no-team'>You belong to no team</div>
+          }
         </div>
 
         <div className='team-search-member col-sm-4'>
@@ -43,8 +47,8 @@ class TeamList extends React.Component {
 
 }
 
-export default TeamList
-
 TeamList.propTypes = {
-  team: React.PropTypes.array
+  teams: React.PropTypes.instanceOf(Immutable.List)
 }
+
+export default TeamList

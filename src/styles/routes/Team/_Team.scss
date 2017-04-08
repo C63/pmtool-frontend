@@ -1,4 +1,25 @@
 .team{
+  &__name {
+    display: flex;
+    justify-content: space-between;
+  }
+  &__member {
+    &__addmore {
+      border: none;
+      background: transparent;
+      box-shadow: none;
+      padding: 0 5px;
+      cursor: pointer;
+      &:hover{
+        background: $topmenu-text;
+        color: white;
+        border-radius: 5px;
+      }
+    }
+  }
+  &-container {
+    overflow: scroll;
+  }
   &-list, &-search-member{
     margin: 3*$base-margin 0;
   }

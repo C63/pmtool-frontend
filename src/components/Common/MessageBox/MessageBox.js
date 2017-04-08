@@ -14,7 +14,7 @@ export const MessageBox = ({ messages, className }) => {
 }
 
 MessageBox.propTypes = {
-  messages : React.PropTypes.array,
+  messages : React.PropTypes.instanceOf(Immutable.List),
   className: React.PropTypes.string
 }
 
