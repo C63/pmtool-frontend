@@ -1,5 +1,5 @@
 import get from 'lodash/get'
-import { loginRequest, loginError, loginSuccess, getProfile } from '../routes/Login/modules/login'
+import { loginRequest, loginError, loginSuccess } from '../routes/Login/modules/login'
 import { signUpSuccess, signUpError, signUpRequest } from '../routes/SignUp/modules/signup'
 import { addTaskRequest, addTaskSuccess, addTaskError,
          addListIdRequest, addListIdSuccess, addListIdError,
@@ -8,7 +8,7 @@ import { addTaskRequest, addTaskSuccess, addTaskError,
          getUserFetchList,
          getTaskListId as fetchTaskListId } from '../routes/ProjectDetail/modules'
 import { getTeams, createTeamRequest, createTeamSuccess, createTeamError,
-         getProjects, createProjectRequest, createProjectSuccess,
+         getProjects, createProjectRequest, createProjectSuccess, getProfile,
          createProjectError } from '../routes/Projects/modules/Projects'
 
 import { getTeamInfo } from '../routes/Team/modules/Team'

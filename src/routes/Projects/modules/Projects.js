@@ -4,6 +4,7 @@ import get from 'lodash/get'
 // Constants
 // ------------------------------------
 export const GET_TEAMS = 'GET_TEAMS'
+export const GET_PROFILE = 'GET_PROFILE'
 
 export const CREATE_TEAM_REQUEST = 'CREATE_TEAM_REQUEST'
 export const CREATE_TEAM_SUCCESS = 'CREATE_TEAM_SUCCESS'
@@ -100,6 +101,12 @@ export function createProjectError (message) {
   }
 }
 
+export function getProfile () {
+  return {
+    type: GET_PROFILE
+  }
+}
+
 // ------------------------------------
 // Reducer
 // ------------------------------------
@@ -153,6 +160,8 @@ function fetchTeamProjectReducer (state = initialState, action) {
     case CREATE_PROJECT_ERROR: {
       return state.merge(action.payload)
     }
+    case GET_PROFILE:
+      return state
     default:
       return state
   }
