@@ -14,11 +14,11 @@ export default class User extends React.Component {
   }
 
   render () {
-    const { user } = this.props
+    const { user, onClick } = this.props
 
     const className = this.getUserClassName()
     return user ? (
-      <div className={className}>
+      <div className={className} onClick={onClick}>
         <div className='user'>
           <span>{user.get('name').match(/\b\w/g).join('')}</span>
         </div>
@@ -34,5 +34,6 @@ export default class User extends React.Component {
 User.propTypes = {
   user: React.PropTypes.object,
   boxOnlyMode: React.PropTypes.bool,
-  displayDirection: React.PropTypes.string
+  displayDirection: React.PropTypes.string,
+  onClick: React.PropTypes.func
 }

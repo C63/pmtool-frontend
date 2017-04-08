@@ -16,16 +16,19 @@ class NewCardModal extends React.Component {
 
   onAddTask (e) {
     e.preventDefault()
+    const { users } = this.props
     this.props.closeModal()
     this.props.addTask({
-      'name' : findDOMNode(this.refs.task_name).value,
-      'description': findDOMNode(this.refs.task_desc).value,
-      'task-list-id': this.props.taskListId
+      'params': {
+        'name' : findDOMNode(this.refs.task_name).value,
+        'description': findDOMNode(this.refs.task_desc).value,
+        'task-list-id': this.props.taskListId
+      },
+      'users': users
     })
   }
   render () {
-    const { isOpen, closeModal } = this.props
-    const users = Immutable.List().push(Immutable.fromJS(JSON.parse(localStorage.getItem('userInfo'))))
+    const { isOpen, closeModal, users } = this.props
 
     return (
       <CoreModal isOpen={isOpen} closeModal={closeModal}>
@@ -58,9 +61,13 @@ NewCardModal.propTypes = {
   isOpen : React.PropTypes.bool,
   closeModal : React.PropTypes.func,
   addTask: React.PropTypes.func,
-  taskListId: React.PropTypes.string
+  taskListId: React.PropTypes.string,
+  users: React.PropTypes.instanceOf(Immutable.List)
 }
-const mapStateToProps = () => ({})
+const mapStateToProps = (state) => ({
+  users : state.project.get('usersList')
+})
+
 const mapDispatchToProps = (dispatch) => ({
   addTask: (params) => dispatch(addTask(params))
 })

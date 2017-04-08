@@ -5,6 +5,7 @@ import { addTaskRequest, addTaskSuccess, addTaskError,
          addListIdRequest, addListIdSuccess, addListIdError,
          getComments as fetchComments, addCommentRequest, addCommentSuccess, addCommentError,
          addAccountRequest, addAccountSuccess, addAccountError, getTasksDetails,
+         getUserFetchList,
          getTaskListId as fetchTaskListId } from '../routes/ProjectDetail/modules'
 import { getTeams, createTeamRequest, createTeamSuccess, createTeamError,
          getProjects, createProjectRequest, createProjectSuccess,
@@ -55,16 +56,17 @@ export function doSignUp (data) {
   }
 }
 
-export function addTask (params) {
+export function addTask (p) {
+  const { params, users } = p
+
   return (dispatch) => {
     dispatch(addTaskRequest(params))
     fetch(DEV_URL + 'tasks', authPost(params))
     .then(
       response => response.json().then(data => {
-        const user = JSON.parse(localStorage.getItem('userInfo'))
-        if (!data.accounts) {
-          dispatch(addAccountToTask({ 'taskId' : get(data, 'task-id'), 'accountId' : get(user, 'account-id') }))
-        }
+        users.forEach(user => {
+          return dispatch(addAccountToTask({ 'taskId' : get(data, 'task-id'), 'accountId' : user.get('account-id') }))
+        })
         return dispatch(addTaskSuccess(data))
       }),
       error => error.json().then(err => dispatch(addTaskError(err)))
@@ -265,6 +267,19 @@ export function addAccountToTask ({ taskId, accountId }) {
       }
     },
     error => error.json().then(err => dispatch(addAccountError(err)))
+    )
+  }
+}
+
+export function searchUser (user) {
+  return (dispatch) => {
+    fetch(DEV_URL + `accounts/search?query=` + user, authGet())
+    .then(
+     response => response.json().then(data => {
+       if (data) {
+         return dispatch(getUserFetchList(data))
+       }
+     })
     )
   }
 }

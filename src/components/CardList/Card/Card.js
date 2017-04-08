@@ -55,7 +55,7 @@ export default class Card extends React.Component {
           <div className={classNames('card', listMode)} onClick={this.toggleModal}>
             <div className='card-left col-sm-8'>
               <div className='card__content'>
-                <p>{card.get('task-description')}</p>
+                <p>{card.get('task-description') ? card.get('task-description') : 'No description'}</p>
               </div>
               <div className='card__userbox'>
                 <UserList users={card.get('accounts')} className='card__users' />
