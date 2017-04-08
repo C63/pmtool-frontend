@@ -47,11 +47,11 @@ class ProjectDetail extends React.Component {
           <div className='list-mode'>
             <i className={classNames('material-icons', { 'active': listMode === 'horizontal' })}
               onClick={() => this.switchViewMode()}>
-              view_module
+              list
             </i>
             <i className={classNames('material-icons', { 'active': listMode === 'vertical' })}
               onClick={() => this.switchViewMode()}>
-              list
+              view_module
             </i>
           </div>
           <div className={classNames('list-container', 'list-container__' + listMode)}>
